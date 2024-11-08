@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -92,6 +93,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'centra.wsgi.application'
 
+# Carga las variables desde el archivo .env
+load_dotenv()
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
