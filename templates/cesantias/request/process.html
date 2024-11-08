@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+<body>     
+    <div class="process-fieldset-container">
+        <fieldset class="process-fieldset process">
+            <legend>Liquidación</legend>
+            {% if show_settlement_fields %}
+            <div class="process-form-group">
+                <label class="process-label for="{{ request_form.settlement_date.id_for_label }}">Fecha liquidación:</label>
+            </div>
+            <div class="cesantias-input">
+                {{ request_form.settlement_date }}
+            </div>
+            <div class="process-form-group">
+                <label class="process-label for="{{ request_form.cdp_request_date.id_for_label }}">Fecha solicitud CDP:</label>
+            </div>
+            <div class="cesantias-input">
+                {{ request_form.cdp_request_date }}
+            </div>
+            {% endif %}
+        </fieldset>
+
+        <fieldset class="process-fieldset process">
+            <legend>Detalle CDP</legend>
+            {% if show_cdp_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.cdp_issue_date.id_for_label }}">Fecha emisión CDP:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.cdp_issue_date }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.cdp_number.id_for_label }}">Número CDP:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.cdp_number }}
+                </div>
+            {% endif %}
+        </fieldset>
+
+        <fieldset class="process-fieldset process">
+            <legend>Datos Resolución</legend>
+            {% if show_home_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.holder_position.id_for_label }}">Cargo Titular:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.holder_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.incharge_position.id_for_label }}">Cargo titular por encargo:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.incharge_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.sell_seller.id_for_label }}">Vendedor:</label>
+                    <div class="cesantias-input">{{ request_detail_form.sell_seller }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.sell_doc_type.id_for_label }}">Tipo de documento del vendedor:</label>
+                    <div class="cesantias-input">{{ request_detail_form.sell_doc_type }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.sell_doc_num.id_for_label }}">Número de documento del vendedor:</label>
+                    <div class="cesantias-input">{{ request_detail_form.sell_doc_num }}</div>
+                </div>
+            {% endif %}
+        
+            {% if show_def_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.holder_position.id_for_label }}">Cargo Titular:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.holder_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.incharge_position.id_for_label }}">Cargo titular por encargo:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.incharge_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.def_resolution.id_for_label }}">Número de resolución Retiro definitivo:</label>
+                    <div class="cesantias-input">{{ request_detail_form.def_resolution }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.def_date.id_for_label }}">Fecha de la resolución retiro definitivo:</label>
+                    <div class="cesantias-input">{{ request_detail_form.def_date }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.def_position.id_for_label }}">Cargo:</label>
+                    <div class="cesantias-input">{{ request_detail_form.def_position }}</div>
+                </div>
+            {% endif %}
+        
+            {% if show_study_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.holder_position.id_for_label }}">Cargo Titular:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.holder_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.incharge_position.id_for_label }}">Cargo titular por encargo:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.incharge_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.est_nit.id_for_label }}">NIT de la institución educativa:</label>
+                    <div class="cesantias-input">{{ request_detail_form.est_nit }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.est_institution.id_for_label }}">Nombre de la institución educativa:</label>
+                    <div class="cesantias-input">{{ request_detail_form.est_institution }}</div>
+                </div>
+            {% endif %}
+
+            {% if show_hipo_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.holder_position.id_for_label }}">Cargo Titular:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.holder_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.incharge_position.id_for_label }}">Cargo titular por encargo:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.incharge_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.hip_loan_number.id_for_label }}">Número del crédito hipotecario:</label>
+                    <div class="cesantias-input">{{ request_detail_form.hip_loan_number }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.hip_nit.id_for_label }}">NIT del banco:</label>
+                    <div class="cesantias-input">{{ request_detail_form.hip_nit }}</div>
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ RequestDetailForm.hip_bank.id_for_label }}">Nombre del banco:</label>
+                    <div class="cesantias-input">{{ request_detail_form.hip_bank }}</div>
+                </div>
+            {% endif %}
+        </fieldset>
+
+        <fieldset class="process-fieldset process">
+            <legend>Emision Resolucion y RPC</legend>
+            {% if show_noti_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.notify_date.id_for_label }}">Fecha de Notificación:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.notify_date }}
+                </div>
+            {% endif %}
+            {% if show_fact_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.resolution_date.id_for_label }}">Fecha de Resolución:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.resolution_date }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.resolution_number.id_for_label }}">Número de Resolución:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.resolution_number }}
+                </div>
+            {% endif %}
+            {% if show_rpc_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.rpc_request_date.id_for_label }}">Fecha Solicitud RPC:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.rpc_request_date }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.rpc_number.id_for_label }}">Numero RPC:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.rpc_number }}
+                </div>
+            {% endif %}
+        </fieldset>
+
+        <fieldset class="process-fieldset process">
+            <legend>Proceso de Pago</legend>
+            {% if show_pago_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.billing_date.id_for_label }}">Fecha paso a facturacion:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.billing_date }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label"for="{{ request_form.treasury_date.id_for_label }}">Fecha de paso a tesorería:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.treasury_date }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.billing_number.id_for_label }}">Número de Factura:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.billing_number }}
+                </div>
+            {% endif %}
+        </fieldset>
+    </div>
+</body>
+</html>

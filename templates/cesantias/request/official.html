@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+<body>
+    <div class="cesantias-fieldset-cesantias">
+        <fieldset class="cesantias-fieldset cesantias"> 
+            <legend>Información Del Solicitante</legend>
+
+            {% if request_form.instance.pk %}
+                <div class="cesantias-outside-form-text">
+                    <label class="title-label" for="{{ official_form.number_ID.id_for_label }}">Número Identificación:</label>
+                    {{ official_form.instance.number_ID }}
+                </div>
+            {% else %}   
+                <div class="cesantias-outside-form-text">
+                    <label class="cesantias-label" for="{{ official_form.number_ID.id_for_label }}">Número Identificación:</label>
+                    <span><input type="text" id="id_number_ID" name="number_ID" data-url="{% url 'function_autocomplete' %}" placeholder="Buscar Funcionario" class="autocomplete-input">
+                        <input type="hidden" id="number_ID_ls" name="number_ID_ls">
+                        <ul id="autocomplete-results" class="autocomplete-results"></ul>                    
+                    </span>
+                </div>
+            {% endif %}
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="official.form-group">
+                            <label class="cesantias-label" >Nombres:</label>
+                            <div class="cesantias-input">{{ official_form.names }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="official.form-group">
+                            <label class="cesantias-label" >Apellidos:</label>
+                            <div class="cesantias-input">{{ official_form.last_names }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" >
+                        <div class="official.form-group">
+                            <label class="cesantias-label" >Género:</label>
+                            <div class="cesantias-input">{{ official_form.gender_display }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="official.form-group">
+                            <label class="cesantias-label" >Entidad:</label>
+                            <div class="cesantias-input">{{ official_form.entity_ID_display }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="official.form-group">
+                            <label class="cesantias-label" >Fecha Ingreso:</label>
+                            <div class="cesantias-input">{{ official_form.start_date }}</div>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Departamento:</label>
+                            <div class="cesantias-input">{{ official_form.departament_display }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Municipio:</label>
+                            <div class="cesantias-input">{{ official_form.city_display }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Teléfono:</label>
+                            <div class="cesantias-input">{{ official_form.phone }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Extensión:</label>
+                            <div class="cesantias-input">{{ official_form.extensions }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Dirección:</label>
+                            <div class="cesantias-input">{{ official_form.address }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-1">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Celular:</label>
+                            <div class="cesantias-input">{{ official_form.celphone }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</body>
+</html>

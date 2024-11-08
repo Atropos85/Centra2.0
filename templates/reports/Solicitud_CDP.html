@@ -1,0 +1,275 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte-pdf</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 150px;
+        }
+        .custom-table {
+            width: 100%;                  /* Ajusta el ancho de la tabla */
+            margin: 0 auto;              /* Centra la tabla en la página */
+            border-collapse: collapse;   /* Colapsa los bordes de las celdas */
+        }
+
+        .custom-table td {
+            border: 1px solid black;     /* Añade borde a las celdas */
+            padding: 10px;               /* Espacio interno en cada celda */
+            text-align: center;          /* Centra el contenido en las celdas */
+        }
+        .date{
+            width: 90%;
+            text-align: left;
+            font-family: 'Arial', sans-serif; 
+            margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+        }
+        .date p {
+            line-height: 1.6; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 14px;  /* Tamaño de fuente estándar */
+        }
+        .text{
+            width: 90%;
+            text-align: left;
+            font-family: 'Arial', sans-serif; 
+            margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+        }
+        .text p {
+            line-height: 1; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 12px;  /* Tamaño de fuente estándar */
+        }
+        .section {
+            width: 90%;             /* Establece el ancho de la sección al 90% del contenedor */
+            margin: 0 auto;         /* Centrará la sección horizontalmente */
+            border-collapse: collapse; 
+        }
+        .section th, .section td {
+            border: 1px solid #000;
+            padding: 1px;
+            text-align: left;
+        }
+        section td {
+            text-align: left;
+        }
+        .section th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .title {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 7px;
+            margin-bottom: 7px;
+        }
+        .highlighted {
+            background-color: #f2f2f2;
+        }
+        .checkbox {
+            text-align: center;
+        }
+        .signatures {
+            width: 90%;
+            margin: 60px auto 0; /* Esto añade espacio antes de la sección de firmas */
+            text-align: left;
+            font-family: 'Arial', sans-serif; /* Utiliza la misma tipografía que el resto del documento */
+        }
+
+        .signatures p {
+            line-height: 1.6; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 12px;  /* Tamaño de fuente estándar */
+        }
+
+        .signatures strong {
+            font-size: 12px; /* Resalta los nombres */
+        }
+        .approved{
+            width: 90%;
+            text-align: left;
+            font-family: 'Arial', sans-serif; 
+            margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+        }
+        .approved p {
+            line-height: 1.2; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 9px;  /* Tamaño de fuente estándar */
+        }
+        .approved strong {
+            font-size: 9px; /* Resalta los nombres */
+        }
+</style>
+</head>
+<body>
+
+
+<div class="container">
+    
+    <div class="header">
+        <table class="custom-table">
+            <tr>
+                <!-- Primera columna con una sola celda que abarca 3 filas -->
+                <td rowspan="3">
+                    <img src=""  alt="Gobernación de Cundinamarca">
+                </td>
+                <td >GESTIÓN FINANCIERA</td>
+                <td>Código: A-GF-FR-013</td>
+            </tr>
+            <tr>
+                <td rowspan="2">SOLICITUD DE CDP SIN CONCEPTO PRE CONTRACTUAL</td>
+                <td>Versión: 03</td>
+            </tr>
+            <tr>              
+                <td>Fecha:09/04/2019</td>
+            </tr>
+        </table>
+    </div>
+    
+    <p class="date">Bogotá D.C., {{ request.settlement_date }} </p>    
+    <br>
+    <div class="text">
+        <p>Doctora:</p>
+        <p>CAROLINA ROMERO FIGUEROA</p>
+        <p>Directora de Presupuesto</p>
+        <p>Secretaría de Hacienda</p>
+    </div>
+
+    <br>
+    <p class="text">Atentamente solicito expedir Reserva de Recursos CDP con cargo a la siguiente imputación presupuestal:</p>
+    <br>
+
+    <h4 class="title">SECCIÓN PRESUPUESTAL</h4>
+    <h5 class="title">Código: 1114</h5>
+    <table class="section">
+        <tr>
+            <th>Dato Maestro</th>
+            <th>Código SAP</th>
+        </tr>
+        <tr>
+            <td>Fondo</td>
+            <td>{{ request.official_ID.entity_ID.fund }}</td>
+        </tr>
+        <tr>
+            <td>Área Funcional</td>
+            <td>9/999/EC</td>
+        </tr>
+        <tr>
+            <td>Posición Presupuestal</td>
+            <td>{{ request.official_ID.entity_ID.posPre }}</td>
+        </tr>
+        <tr>
+            <td>Programa Presupuestario</td>
+            <td>999999</td>
+        </tr>
+        <tr>
+            <td>Elemento PEP</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Cuenta Mayor</td>
+            <td>{{ request.official_ID.entity_ID.ledger_account }}</td>
+        </tr>
+        <tr>
+            <td>Objeto: Cesantía</td>
+            <td>{{ request.official_ID.names }} {{ request.official_ID.last_names }} C.C. {{ request.official_ID.number_ID }}</td>
+        </tr>
+        <tr>
+            <td>Valor</td>
+            <td>$ {{ request.severance_disbursed_value}}</td>
+        </tr>
+        <tr>
+            <td>SPC</td>
+            <td></td>
+        </tr>
+    </table>
+
+    <!-- Clase Documento -->
+    <h4 class="title">CLASE DOCUMENTO</h4>
+    <h5 class="title">(Marcar con x)</h5>
+    <table class="section">
+            <thead>
+                <tr>
+                    <th>Código</th>
+                    <th>Clase Documento</th>
+                    <th>Descripción</th>
+                    <th>Marcado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>R0</td>
+                    <td>Gastos Directos:</td>
+                    <td>Gastos no asociados con compras y contrataciones (parafiscales, seguridad social, servicios públicos, seguros, resoluciones, gastos cajas menores, etc.)</td>
+                    <td style="text-align: center;"><b>X</b></td>
+                </tr>
+                <tr>
+                    <td>R1</td>
+                    <td>Deuda Pública:</td>
+                    <td>Gastos por concepto del servicio de la deuda (amortización, intereses, comisiones, gastos financieros, etc.)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R2</td>
+                    <td>Nómina:</td>
+                    <td>Gastos relacionados con la nómina y sus gastos derivados (sueldos, gastos personales, etc.)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R3</td>
+                    <td>Transferencias:</td>
+                    <td>Erogaciones transferidas a otros organismos públicos o privados (Contraloría, transferencias a descentralizadas, servicios públicos a colegios, etc.)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R6</td>
+                    <td>Imputación Activos Fijos</td>
+                    <td>Compra de activos fijos afecta gastos de funcionamiento</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R7</td>
+                    <td>Imputación a CECO</td>
+                    <td>Contratos que afecten gastos de funcionamiento diferentes a compra de activos/suministros (contratos prestación servicios.)</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R8</td>
+                    <td>Imputación stock de almacén</td>
+                    <td>Contratos de adquisición materiales y suministros que deben inventariarse y administrarse por el Almacén de Secretaría General, con cargo a gastos de funcionamiento.</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>R9</td>
+                    <td>Traslados Presupuestales</td>
+                    <td>Contracrédito o reducción de apropiaciones para acreditar o aumentar otras</td>
+                    <td></td>
+                </tr>
+            </tbody>
+    </table>
+
+    <br>
+    <p class="text">Cordialmente,</p>
+
+    <div class="signatures">
+        <p><strong>JACQUELINE BERMUDEZ FORERO</strong><br>Directora de Administración del Talento Humano</p>
+    </div>
+    <div class="approved">    
+        <p><strong>Aprobó:</strong> Yineth Stephany Ramírez, Asesora de Presupuesto, Secretaría de la Función Pública</p>    
+        <p><strong>Revisó:</strong> Néstor A. Rodríguez R., Coordinador Grupo Cesantías, Dirección de Administración del Talento Humano, S.F.P.</p>    
+        <p><strong>Elaboró:</strong> María P. González G., Profesional Universitario, Grupo Cesantías, Dirección de Administración del Talento Humano, S.F.P.</p>
+    </div>
+</div>
+</body>
+</html>

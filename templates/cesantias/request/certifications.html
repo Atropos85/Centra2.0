@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+<body>
+
+<fieldset>
+    <div id="certifications">
+        {{ certifications_formset.management_form }}  <!-- Esto es necesario para manejar el FormSet -->
+        <div class="container-fluid">
+            <div class="formset-container">
+                <div class="formset-group">
+                    {% for cert_form in certifications_formset %}
+                        <div class="formset-item"> <!-- Ajusta el ancho de cada formset al 45% -->
+                            {{ cert_form.id }}
+                            <div class="cert-form-group">
+                                <label class="cert-label" for="{{ cert_form.cert_date.id_for_label }}">Fecha Certificación:</label>
+                                <span class="cert-input">{{ cert_form.cert_date }}</span>
+                            </div>
+                            <div class="cert-form-group">
+                                <label class="cert-label"  for="{{ cert_form.cert_number.id_for_label }}">Número de la Certificación:</label>
+                                <span class="cert-input">{{ cert_form.cert_number }}</span>
+                            </div>
+                            <div class="cert-form-group">
+                                <label class="cert-label"  for="{{ cert_form.cert_name.id_for_label }}">Nombre de la Certificación:</label>
+                                <span class="cert-input">{{ cert_form.cert_name }}</span>
+                            </div>
+                            <div class="cert-form-group">
+                                <label class="cert-label"  for="{{ cert_form.cert_position.id_for_label }}">Cargo que emite la certificación:</label>
+                                <span class="cert-input">{{ cert_form.cert_position }}</span>
+                            </div>
+                            <div class="cert-form-group">
+                                <label class="cert-label"  for="{{ cert_form.cert_entity_name.id_for_label }}">Entidad que emite la certificación:</label>
+                                <span class="cert-input">{{ cert_form.cert_entity_name }}</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>        
+    </div>
+</fieldset>
+
+</body>
+</html>

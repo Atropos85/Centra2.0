@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+
+<!-- Botón para togglear la sidebar -->
+<button id="toggleSidebar"><i class="fas fa-paperclip"></i></button>
+
+<!-- Sidebar -->
+<div class="sidebar" id="sidebar">
+    <fieldset>
+        <h2 class="text-center">Reportes</h2> <!-- Título centrado -->
+
+        <!-- Formulario -->
+        <form id="reportForm" onsubmit="return handleSubmit(event);">
+            <!-- Botón de enviar el formulario -->
+            <div class="btn-container">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    {% if request_form.instance.pk %}Enviar Solicitud{% else %}Crear Solicitud{% endif %}
+                </button>
+            </div>
+
+            {% if request_form.instance.pk %}
+                <div class="checkbox-group">
+                    <input type="checkbox" name="reporte_liquidacion" id="reporte_liquidacion" autocomplete="off">
+                    <label for="reporte_liquidacion">Generar reporte LIQUIDACION</label>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" name="reporte_cdp" id="reporte_cdp" autocomplete="off">
+                    <label for="reporte_cdp">Generar reporte Solicitud CDP</label>
+                </div>
+
+                {% if show_cdp_fields %}
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="reporte_Resolucion" id="reporte_Resolucion" autocomplete="off">
+                        <label for="reporte_Resolucion">Generar reporte Solicitud RESOLUCIÓN</label>
+                    </div>
+                {% endif %}
+                {% if show_noti_fields %}
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="reporte_rpc" id="reporte_rpc" autocomplete="off">
+                        <label for="reporte_rpc">Generar reporte Solicitud RPC</label>
+                    </div>
+                {% endif %}
+            {% endif %}
+
+            <div class="btn-container">
+                <a href="{% url 'list_requests' %}" class="btn btn-outline-primary">Volver a la lista de solicitudes</a> <!-- Botón de advertencia -->
+            </div>
+        </form>
+    </fieldset>
+</div>
+
+<script>
+    // Función para mostrar y ocultar la sidebar
+    document.getElementById("toggleSidebar").addEventListener("click", function (event) {
+        event.preventDefault();  // Evita el refresco de la página
+
+        const sidebar = document.getElementById("sidebar");
+        const toggleButton = document.getElementById("toggleSidebar");
+
+        // Alternar la clase 'open' para la sidebar
+        sidebar.classList.toggle("open");
+
+        // Ajustar la posición del botón toggle según el estado de la sidebar
+        if (sidebar.classList.contains("open")) {
+            toggleButton.style.right = "280px"; // Desplazar el botón hacia la izquierda
+        } else {
+            toggleButton.style.right = "0"; // Colocar el botón en la posición original
+        }
+    });
+
+    // Manejar el envío del formulario
+    function handleSubmit(event) {
+        event.preventDefault(); // Evita la recarga de la página
+        // Aquí puedes agregar la lógica para procesar el formulario
+        alert("Formulario enviado!"); // Mensaje de ejemplo
+        // Si deseas hacer una solicitud AJAX, aquí es donde lo harías
+        return false; // Evitar que el formulario se envíe de manera tradicional
+    }
+</script>
+
+</body>
+</html>

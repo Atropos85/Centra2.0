@@ -1,0 +1,68 @@
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
+<!DOCTYPE html>
+<head>
+</head>
+<body>
+    <div class="cesantias-fieldset-cesantias">
+        <fieldset class="cesantias-fieldset cesantias"> 
+            <legend>Datos de la Solicitud</legend>
+            {{ request_form.official_ID }} 
+
+            {% if request_form.instance.pk %}
+                <div class="cesantias-outside-form-text">                   
+                    <label class="title-label" for="{{ official_form.number_ID.id_for_label }}" >Identificador Solicitud:</label>
+                    {{ request_form.instance.request_ID }}
+                </div>
+            {% endif %}
+                
+
+            <div class="container-fluid">
+                <div class="row">
+                    {% if request_form.instance.pk %}
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label class="cesantias-label" >Estado de la solicitud:</label>
+                                <div class="cesantias-input">{{ request_form.instance.get_request_state_display }} 
+                                    <input type="hidden" id="requestStateValue" value="{{ request_form.instance.request_state }}">
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Número del Radicado:</label>
+                            <div class="cesantias-input">{{ request_form.filling_number }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Fecha del Radicado:</label>
+                            <div class="cesantias-input">{{ request_form.request_date }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Tipo de Cesantías:</label>
+                            <div class="cesantias-input">{{ request_form.severance_type }}</div> 
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Modo de Retiro:</label>
+                            <div class="cesantias-input">{{ request_form.withdrawal_mode }}</div> 
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="cesantias-label" >Valor del Radicado:</label>
+                            <div class="cesantias-input">{{ request_form.filling_value|intcomma }}</div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </div>
+</body>
+</html>

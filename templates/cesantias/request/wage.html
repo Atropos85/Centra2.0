@@ -1,0 +1,122 @@
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+</head>
+<body>
+    <fieldset>
+        <table class="cesantias-table table-condensed">
+            <thead>
+                <tr>
+                    <th>Descripcion</th>
+                    <th>Valor</th>
+                    <th>Calculo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label for="{{ wage_factors_form.wage.id_for_label }}">SUELDO:</label></td>
+                    <td>{{ wage_factors_form.wage|default:0|intcomma }}</td>
+                    <td>
+                        <input type="text" id="wage_doc" name="wage_doc" class="calculated_field" step="0.01" placeholder="0" disabled />
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.overwage.id_for_label }}">SOBRESUELDO:</label></td>
+                    <td>{{ wage_factors_form.overwage }}</td>
+                    <td>
+                        <input type="text" id="overwage_doc" name="overwage_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.annual_bonus.id_for_label }}">PRIMA ANUAL:</label></td>
+                    <td>{{ wage_factors_form.annual_bonus }}</td>
+                    <td>
+                        <input type="text" id="annual_bonus_doc" name="annual_bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.holiday_bonus.id_for_label }}">PRIMA DE VACACIONES:</label></td>
+                    <td>{{ wage_factors_form.holiday_bonus }}</td>
+                    <td>
+                        <input type="text" id="holiday_bonus_doc" name="holiday_bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.christmas_bonus.id_for_label }}">PRIMA DE NAVIDAD:</label></td>
+                    <td>{{ wage_factors_form.christmas_bonus }}</td>
+                    <td>
+                        <input type="text" id="christmas_bonus_doc" name="christmas_bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.bonus.id_for_label }}">BONIFICACIÓN:</label></td>
+                    <td>{{ wage_factors_form.bonus }}</td>
+                    <td>
+                        <input type="text" id="bonus_doc" name="bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.transport_subsidy.id_for_label }}">SUBSIDIO DE TRANSPORTE:</label></td>
+                    <td>{{ wage_factors_form.transport_subsidy }}</td>
+                    <td>
+                        <input type="text" id="transport_subsidy_doc" name="transport_subsidy_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.food_subsidy.id_for_label }}">AUXILIO DE ALIMENTACIÓN:</label></td>
+                    <td>{{ wage_factors_form.food_subsidy }}</td>
+                    <td>
+                        <input type="text" id="food_subsidy_doc" name="food_subsidy_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.technical_bonus.id_for_label }}">PRIMA TÉCNICA:</label></td>
+                    <td>{{ wage_factors_form.technical_bonus }}</td>
+                    <td>
+                        <input type="text" id="technical_bonus_doc" name="technical_bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.seniority_bonus.id_for_label }}">PRIMA DE ANTIGÜEDAD:</label></td>
+                    <td>{{ wage_factors_form.seniority_bonus }}</td>
+                    <td>
+                        <input type="text" id="seniority_bonus_doc" name="seniority_bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.accommodation_bonus.id_for_label }}">PRIMA DE ALOJAMIENTO:</label></td>
+                    <td>{{ wage_factors_form.accommodation_bonus }}</td>
+                    <td>
+                        <input type="text" id="accommodation_bonus_doc" name="accommodation_bonus_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.overtime.id_for_label }}">HORAS EXTRAS:</label></td>
+                    <td>{{ wage_factors_form.overtime }}</td>
+                    <td>
+                        <input type="text" id="overtime_doc" name="overtime_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.dev_by_draw.id_for_label }}">DEV. POR SORTEO:</label></td>
+                    <td>{{ wage_factors_form.dev_by_draw }}</td>
+                    <td>
+                        <input type="text" id="dev_by_draw_doc" name="dev_by_draw_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="{{ wage_factors_form.travel_expenses.id_for_label }}">VIÁTICOS:</label></td>
+                    <td>{{ wage_factors_form.travel_expenses }}</td>
+                    <td>
+                        <input type="text" id="travel_expenses_doc" name="travel_expenses_doc" class="calculated_field" step="0.01" placeholder="0" disabled/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </fieldset>
+</body>
+</html>

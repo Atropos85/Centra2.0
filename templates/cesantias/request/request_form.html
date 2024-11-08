@@ -1,0 +1,106 @@
+{% extends 'registration/base.html' %}
+{% load static %}
+{{ reports|json_script:"reports" }}
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="application/json" id="reports">
+        {{ reports|safe }}
+    </script>
+</head>
+<body>
+    <div class="container-fluid mt-5">
+        {% block content %}
+        <h2 class="text-center mb-4">GESTION DE LA SOLICITUD</h2>
+
+        {% if messages %}
+            <div>
+                <ul class="list-unstyled">
+                {% for message in messages %}
+                    {% if 'error' in message.tags %}
+                        <!-- Lista para mensajes de error -->
+                        <ul class="error-messages">
+                            <li class="error">{{ message }}</li>
+                        </ul>
+                    {% else %}
+                        <!-- Lista para otros tipos de mensajes -->
+                        <ul class="success-messages">
+                            <li class="{{ message.tags }}">{{ message }}</li>
+                        </ul>
+                    {% endif %}
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+
+        {% if request_form.errors %}
+            <div class="alert alert-danger">
+                {% for field in request_form %}
+                    {% for error in field.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST" class="bg-light p-4 rounded shadow">
+            {% csrf_token %}
+
+            {% include 'cesantias/request/official.html' %}
+
+            {% include 'cesantias/request/request.html' %}
+            <p>
+                <div class="panel with-nav-tabs panel-primary nav-justified">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link" id="request-tab" data-toggle="tab" href="#request" role="tab" aria-controls="request" aria-selected="false">CERTIFICACIONES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="process-tab" data-toggle="tab" href="#process" role="tab" aria-controls="process" aria-selected="false">SEGUIMIENTO</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="wage-tab" data-toggle="tab" href="#wage" role="tab" aria-controls="wage" aria-selected="false">FACTORES SALARIALES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="history-tab" data-toggle="tab" href="#history" role="tab" aria-controls="history" aria-selected="false">ANTECEDENTES</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="severance-tab" data-toggle="tab" href="#severance" role="tab" aria-controls="severance" aria-selected="true">PAGO CESANTIAS</a>
+                            </li>
+                        </ul>
+                    </div>
+                
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade" id="request" role="tabpanel" aria-labelledby="request-tab">
+                            {% include 'cesantias/request/certifications.html' %}
+                        </div>
+                        <div class="tab-pane fade" id="process" role="tabpanel" aria-labelledby="process-tab">
+                            {% include 'cesantias/request/process.html' %}
+                        </div>
+                        <div class="tab-pane fade" id="wage" role="tabpanel" aria-labelledby="wage-tab">
+                            {% include 'cesantias/request/wage.html' %}
+                        </div>
+                        <div class="tab-pane fade" id="history" role="tabpanel" aria-labelledby="history-tab">
+                            {% include 'cesantias/request/history.html' %}
+                        </div>
+                        <div class="tab-pane fade show active" id="severance" role="tabpanel" aria-labelledby="severance-tab">
+                            {% include 'cesantias/request/severance.html' %}
+                        </div>
+                    </div>
+                </div>
+
+            {% include 'cesantias/request/reports.html' %}
+            
+        </form>
+        {% endblock %}
+    </div>
+</body>
+</html>

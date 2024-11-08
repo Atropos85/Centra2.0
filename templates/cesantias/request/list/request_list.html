@@ -1,0 +1,80 @@
+{% extends 'registration/base.html' %}
+
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<div class="container-fluid mt-5">
+    <h1 class="text-center mb-4">Lista de Solicitudes</h1>
+
+    <!-- Tabla con clases de Bootstrap -->
+
+    <div class="table-responsive">
+        <table class="table list-table-bordered list-table-hover list-table-striped w-100">
+             <thead class="table-primary" style="text-align: center; vertical-align: middle;">
+                <tr>
+                    <th>Solicitud</th>
+                    <th>Iden. Funcionario</th>
+                    <th>Nombre del Funcionario</th>
+                    <th>Fecha de Radicado</th>
+                    <th>Número de Radicado</th>
+                    <th>Valor del radicado</th>
+                    <th>Estado</th>
+                    <th>Tipo Solicitud</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <form method="get">
+                        <td>{{ filters.form.request_ID__icontains }}</td>
+                        <td>{{ filters.form.official_ID_number_ID }}</td>
+                        <td>{{ filters.form.official_ID_name }}</td>
+                        <td>{{ filters.form.request_date }}</td>
+                        <td>{{ filters.form.filling_number__icontains }}</td>
+                        <td>{{ filters.form.filling_value__icontains }}</td>
+                        <td style= "width: 230px" >{{ filters.form.request_state }} </td>
+                        <td style= "width: 270px">{{ filters.form.withdrawal_mode }}</td>
+                        <td><button class="list-btn" type="submit"><i class="fas fa-search"></i></button>
+                            <a class="list-btn" href="{% url 'list_requests' %}"><i class="fas fa-eraser"></i></a>
+                        </td>
+                    </form>
+                </tr>
+                {% for request in requests %}
+                    <tr>
+                        <td>{{ request.request_ID }}</td>
+                        <td>{{ request.official_ID.number_ID }}</td>
+                        <td>{{ request.official_ID }}</td>
+                        <td>{{ request.request_date|date:"d/m/Y" }}</td>
+                        <td>{{ request.filling_number }}</td>
+                        <td>{{ request.filling_value|default:0|intcomma }}</td>
+                        <td>
+                            <!-- Etiqueta visual para el estado -->
+                            <span class="badge badge-{% if request.get_request_state_display == 'Approved' %}success{% elif request.get_request_state_display == 'Rejected' %}danger{% else %}warning{% endif %}">
+                                {{ request.get_request_state_display }}
+                            </span>
+                        </td>
+                        <td>{{ request.get_withdrawal_mode_display }}</td>
+                        <td style="text-align: center; vertical-align: middle;">
+                            <!-- Botón de edición --> 
+                            <a class="list-btn" href="{% url 'edit_request' request.request_ID %}">
+                                <i class="fas fa-pencil-alt"></i> <!-- Usa un icono válido de Font Awesome -->
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Botón para crear una nueva solicitud -->
+    <div class="text-center mt-4">
+        <a href="{% url 'create_request' %}" class="btn btn-primary">Crear Nueva Solicitud</a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,27 @@
+
+services:
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Atropos900
+      POSTGRES_DB: Centra
+    ports:
+      - "5432:5432"  # El puerto del contenedor 5432 será mapeado al puerto local 5432
+    volumes:
+      # Mapea el archivo backup.sql al directorio donde PostgreSQL lo ejecutará
+      - ./backup.sql:/docker-entrypoint-initdb.d/backup.sql
+
+  web:
+    build: .
+    environment:
+      DATABASE_HOST: db  # El nombre del servicio de la base de datos en el contenedor
+      DATABASE_PORT: 5432
+      DATABASE_NAME: Centra
+      DATABASE_USER: postgres
+      DATABASE_PASSWORD: Atropos900
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    entrypoint: ["sh", "-c", "chmod +x /app/wait-for-it.sh && ./wait-for-it.sh db:5432 -- python manage.py migrate && python manage.py runserver 0.0.0.0:8000"]

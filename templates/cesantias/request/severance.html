@@ -1,0 +1,51 @@
+{% load humanize %}
+{% load i18n %}
+{% load l10n %}
+<!DOCTYPE html>
+<html lang="es">
+<head>    
+</head>
+<body>
+    <div class="severance-fieldset-container">
+        <fieldset class="severance-fieldset severance">
+            <legend>Días Laborados</legend>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.total_days.id_for_label }}">Total días:</label>
+                <span class="cesantias-input">{{ request_form.total_days }}</span>
+            </div>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.no_work_days.id_for_label }}">Días no trabajados:</label>
+                <span class="cesantias-input">{{ request_form.no_work_days }}</span>
+            </div>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.working_days.id_for_label }}">Días Trabajados:</label>
+                <span class="cesantias-input">{{ request_form.working_days}}</span>
+            </div>
+        </fieldset>
+
+        <fieldset class="severance-fieldset severance">
+            <legend>Cálculo de Cesantías</legend>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.average_salary.id_for_label }}">Salario Promedio:</label>
+                <span class="cesantias-input">{{ request_form.average_salary|default:0|intcomma }}</span>
+            </div>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.total_severance_value.id_for_label }}">Valor Cesantías Totales:</label>
+                <span class="cesantias-input">{{ request_form.total_severance_value|default:0|intcomma}}</span>
+            </div>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.previous_severance_value.id_for_label }}">Valor Cesantías Anterior:</label>
+                <span class="cesantias-input">{{ request_form.previous_severance_value|default:0|intcomma }}</span>
+            </div>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.balance_severance.id_for_label }}">Saldo de Cesantías:</label>
+                <span class="cesantias-input">{{ request_form.balance_severance|default:0|intcomma}}</span>
+            </div>
+            <div class="severance-form-group">
+                <label class="cesantias-label" for="{{ request_form.severance_disbursed_value.id_for_label }}">Valor Desembolsado:</label>
+                <span class="cesantias-input">{{ request_form.severance_disbursed_value|default:0|intcomma}}</span>
+            </div>
+        </fieldset>
+    </div>
+</body>
+</html>

@@ -1,0 +1,238 @@
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte-pdf</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .header img {
+            width: 150px;
+        }
+        .custom-table {
+            width: 100%;                  /* Ajusta el ancho de la tabla */
+            margin: 0 auto;              /* Centra la tabla en la página */
+            border-collapse: collapse;   /* Colapsa los bordes de las celdas */
+        }
+
+        .custom-table td {
+            border: 1px solid black;     /* Añade borde a las celdas */
+            padding: 4px;               /* Espacio interno en cada celda */
+            text-align: center;          /* Centra el contenido en las celdas */
+        }
+        .custom-table th {
+            border: 1px solid black;     /* Añade borde a las celdas */
+            padding: 4px;               /* Espacio interno en cada celda */
+            text-align: center;          /* Centra el contenido en las celdas */
+        }
+        .date{
+            width: 90%;
+            text-align: left;
+            font-family: 'Arial', sans-serif; 
+            margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+        }
+        .date p {
+            line-height: 1.6; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 14px;  /* Tamaño de fuente estándar */
+        }
+        .text{
+            width: 90%;
+            text-align: left;
+            font-family: 'Arial', sans-serif; 
+            margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+            text-align: justify;
+        }
+        .text p {
+            line-height: 1; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 12px;  /* Tamaño de fuente estándar */
+        }
+        .section {
+            width: 90%;             /* Establece el ancho de la sección al 90% del contenedor */
+            margin: 0 auto;         /* Centrará la sección horizontalmente */
+            border-collapse: collapse; 
+        }
+        .section th, .section td {
+            border: 1px solid #000;
+            padding: 1px;
+            text-align: left;
+        }
+        section td {
+            text-align: left;
+        }
+        .section th {
+            background-color: #f2f2f2;
+            text-align: center;
+        }
+        .title {
+            text-align: center;
+            font-weight: bold;
+            margin-top: 7px;
+            margin-bottom: 7px;
+        }
+        .highlighted {
+            background-color: #f2f2f2;
+        }
+        .checkbox {
+            text-align: center;
+        }
+        .signatures {
+            width: 90%;
+            margin: 60px auto 0; /* Esto añade espacio antes de la sección de firmas */
+            text-align: left;
+            font-family: 'Arial', sans-serif; /* Utiliza la misma tipografía que el resto del documento */
+        }
+
+        .signatures p {
+            line-height: 1.6; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 12px;  /* Tamaño de fuente estándar */
+        }
+
+        .signatures strong {
+            font-size: 12px; /* Resalta los nombres */
+        }
+        .approved{
+            width: 90%;
+            text-align: left;
+            font-family: 'Arial', sans-serif; 
+            margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+        }
+        .approved p {
+            line-height: 1.2; /* Ajuste de la altura de línea para mejor legibilidad */
+            font-size: 9px;  /* Tamaño de fuente estándar */
+        }
+        .approved strong {
+            font-size: 9px; /* Resalta los nombres */
+        }
+</style>
+</head>
+<body>
+
+    <!-- Título principal de la resolución -->
+    <h1 class="title">LIQUIDACION SOLICITUD {{ request.request_ID}}</h1>
+
+    <div class="container">
+        <h2 class="section-title">INFORMACION DE LA SOLICITUD</h2>
+        <table class = "custom-table">
+            <thead>
+                <tr>
+                    <th colspan="2">DATOS DEL FUNCIONARIO</th>
+                    <th colspan="2">FACTORES DEL TIEMPO</th>
+                </tr>
+            </thead>
+            <tr>
+                <td><strong>C.C.:</strong></td><td> {{ request.official_ID.number_ID }}</td>
+                <td><strong>Fecha de Ingreso:</strong></td><td> {{ request.official_ID.start_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Nombre:</strong></td><td> {{ request.official_ID.names }} {{ request.official_ID.last_names }}</td>
+                <td><strong>Fecha de Corte:</strong></td><td> {{ request.request_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Modalidad:</strong></td><td>{{ request.get_withdrawal_mode_display  }}</td>
+                <td><strong>Días Acumulados:</strong></td><td> {{ request.total_days }}</td>
+            </tr>
+            <tr>
+                <td><strong>Entidad:</strong></td><td> {{ request.official_ID.entity_ID.entity_name }}</td>
+                <td><strong>Días no Trabajados:</strong></td><td> {{ request.no_work_days }}</td>
+            </tr>
+            <tr>
+                <td><td></td></td>
+                 <td><strong>Días Trabajados:</strong></td><td> {{ request.working_days }}</td>
+            </tr>
+        </table>
+    </div>
+    <!-- Factores de Salario -->
+    <h2 class="section-title">FACTORES DE SALARIO</h2>
+    <table class = "custom-table">
+        <thead>
+            <tr>
+                <th>CONCEPTO</th>
+                <th>VALOR</th>
+                <th>FACTOR</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>Sueldo</td>                 <td>{{ wage_factors.wage|default:"0"  }}</td>                <td>{{ wage_factors.wage|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Sobresueldo</td>            <td>{{ wage_factors.overwage|default:"0"  }}</td>            <td>{{ wage_factors.overwage|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Prima anual de servicio</td><td>{{ wage_factors.annual_bonus|default:"0"  }}</td>        <td>{{ wage_factors.annual_bonus|default_if_none:0|mul:0.0833  }}</td></tr>
+            <tr><td>Prima de Vacaciones</td>    <td>{{ wage_factors.holiday_bonus|default:"0"  }}</td>       <td>{{ wage_factors.holiday_bonus|default_if_none:0|mul:0.0833  }}</td></tr>
+            <tr><td>Prima de Navidad</td>       <td>{{ wage_factors.christmas_bonus|default:"0"  }}</td>     <td>{{ wage_factors.christmas_bonus|default_if_none:0|mul:0.0833  }}</td></tr>
+            <tr><td>Bonificación</td>           <td>{{ wage_factors.bonus|default:"0"  }}</td>               <td>{{ wage_factors.bonus|default_if_none:0|mul:0.0833 }}</td></tr>
+            <tr><td>Subsidio de transporte</td> <td>{{ wage_factors.transport_subsidy|default:"0"  }}</td>   <td>{{ wage_factors.transport_subsidy|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Auxilio de Alimentación</td><td>{{ wage_factors.food_subsidy|default:"0"  }}</td>        <td>{{ wage_factors.food_subsidy|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Prima Técnica</td>          <td>{{ wage_factors.technical_bonus|default:"0"  }}</td>     <td>{{ wage_factors.technical_bonus|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Prima de Antigüedad</td>    <td>{{ wage_factors.seniority_bonus|default:"0"  }}</td>     <td>{{ wage_factors.seniority_bonus|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Prima de Alojamiento</td>   <td>{{ wage_factors.accommodation_bonus|default:"0"  }}</td> <td>{{ wage_factors.accommodation_bonus|default_if_none:0|mul:1 }}</td></tr>
+            <tr><td>Horas extra</td>            <td>{{ wage_factors.overtime|default:"0"  }}</td>            <td>{{ wage_factors.overtime|default_if_none:0|mul:0.0833  }}</td></tr>
+            <tr><td>Dev. Por Sorteo</td>        <td>{{ wage_factors.dev_by_draw|default:"0"  }}</td>         <td>{{ wage_factors.dev_by_draw|default_if_none:0|mul:0.0833  }}</td></tr>
+            <tr><td>Viáticos</td>               <td>{{ wage_factors.travel_expenses|default:"0"  }}</td>     <td>{{ wage_factors.travel_expenses|default_if_none:0|mul:0.0833  }}</td></tr>
+            <tr>
+                <td></td>
+                <td><strong>SALARIO PROMEDIO:</strong></td>
+                <td>$ {{ request.average_salary }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2 class="section-title">ANTECEDENTES</h2>
+    <table class = "custom-table">
+        <thead>
+            <tr>
+                <th>Solicitud</th>
+                <th>Numero resolucion</th>
+                <th>Fecha Resolucion</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hist in history %}
+                <tr>
+                    <td>{{ hist.request_ID }}</td>
+                    <td>{{ hist.resolution_number }}</td>
+                    <td>{{ hist.resolution_date }}</td>
+                    <td>{{ hist.severance_disbursed_value }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Cálculo de las Cesantías -->
+    <h2 class="section-title">CÁLCULO DE LAS CESANTÍAS</h2>
+    <table class = "custom-table">
+        <tr>
+            <td><strong>Total:</strong></td>
+            <td>$ {{ request.total_severance_value }}</td>
+        </tr>
+        <tr>
+            <td><strong>Antecedentes:</strong></td>
+            <td>$ {{ request.previous_severance_value }}</td>
+        </tr>
+        <tr>
+            <td><strong>Saldo:</strong></td>
+            <td>$ {{ request.balance_severance }}</td>
+        </tr>
+        <tr>
+            <td><strong>Solicitadas:</strong></td>
+            <td>$ {{ request.filling_value }}</td>
+        </tr>
+        <tr>
+            <td><strong>Valor a Reconocer:</strong></td>
+            <td>$ {{ request.severance_disbursed_value }}</td>
+        </tr>
+    </table>
+</body>
+</html>
