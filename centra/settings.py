@@ -103,7 +103,7 @@ DATABASES = {
         'NAME': os.getenv('DATABASE_NAME', 'Centra'),
         'USER': os.getenv('DATABASE_USER', 'postgres'),
         'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Atropos900'),
-        'HOST': os.getenv('DATABASE_HOST', 'db'),  # Asegúrate de que el host esté configurado como 'db'
+        'HOST': os.getenv('DATABASE_HOST', 'localhost'),  # Asegúrate de que el host esté configurado como 'db'
         'PORT': os.getenv('DATABASE_PORT', '5432'),
     }
 }
