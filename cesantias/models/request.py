@@ -57,7 +57,7 @@ class Request(models.Model):
 	# Fecha resolución
     resolution_date = models.DateField(null=True, blank=True)  
 	# Número resolución
-    resolution_number = models.CharField(null=True, blank=True)  
+    resolution_number = models.CharField(max_length=255, null=True, blank=True)  
 	# Fecha solicitud RPC
     rpc_request_date = models.DateField(null=True, blank=True)  
 	# Número RPC
@@ -121,7 +121,7 @@ class Certifications(models.Model):
 	# Fecha de la certificación
     cert_date = models.DateField(null=True, blank=True)  
 	# Número de la certificación
-    cert_number = models.CharField(null=True, blank=True)  
+    cert_number = models.CharField(max_length=255, null=True, blank=True)  
 	# Nombre de quien certifica
     cert_name = models.CharField(max_length=255,null=True, blank=True)  
 	# Cargo de quien certifica
