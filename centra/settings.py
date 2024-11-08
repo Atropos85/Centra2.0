@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import dj_database_url
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
@@ -100,15 +101,22 @@ load_dotenv()
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # variable db --https://stackpython.medium.com/how-to-start-django-project-with-a-database-postgresql-aaa1d74659d8
+#DATABASES = {
+#    'default': {
+#        
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': os.getenv('DATABASE_NAME', 'Centra'),
+#        'USER': os.getenv('DATABASE_USER', 'postgres'),
+#        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Atropos900'),
+#        'HOST': os.getenv('DATABASE_HOST', 'localhost'),  # Asegúrate de que el host esté configurado como 'db'
+#        'PORT': os.getenv('DATABASE_PORT', '5432'),
+#    }
+#}
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DATABASE_NAME', 'Centra'),
-        'USER': os.getenv('DATABASE_USER', 'postgres'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD', 'Atropos900'),
-        'HOST': os.getenv('DATABASE_HOST', 'localhost'),  # Asegúrate de que el host esté configurado como 'db'
-        'PORT': os.getenv('DATABASE_PORT', '5432'),
-    }
+    'default': dj_database_url.config(
+        default=os.getenv('DATABASE_URL')  # Render provee DATABASE_URL automáticamente
+    )
 }
 
 
