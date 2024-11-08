@@ -3,9 +3,9 @@ services:
   db:
     image: postgres:latest
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: Atropos900
-      POSTGRES_DB: Centra
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
     ports:
       - "5432:5432"  # El puerto del contenedor 5432 será mapeado al puerto local 5432
     volumes:
@@ -15,11 +15,11 @@ services:
   web:
     build: .
     environment:
-      DATABASE_HOST: db  # El nombre del servicio de la base de datos en el contenedor
-      DATABASE_PORT: 5432
-      DATABASE_NAME: Centra
-      DATABASE_USER: postgres
-      DATABASE_PASSWORD: Atropos900
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_HOST: db
     ports:
       - "8000:8000"
     depends_on:
