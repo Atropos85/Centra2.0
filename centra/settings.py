@@ -22,7 +22,7 @@ import dj_database_url
 SECRET_KEY = 'django-insecure--m)ne^8up&os#b_2w%_ejfxhnfwvw9k&9jq&hcmfseil18xvaz'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -93,6 +93,10 @@ TEMPLATES = [
 
 
 WSGI_APPLICATION = 'centra.wsgi.application'
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://centra-latest.onrender.com',
+]
 
 # Carga las variables desde el archivo .env
 load_dotenv()
