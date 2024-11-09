@@ -5,45 +5,66 @@ document.addEventListener('DOMContentLoaded', function() {
     const totalDaysInput = document.getElementById('id_total_days');
     const noWorkDaysInput = document.getElementById('id_no_work_days');
     const workingDaysInput = document.getElementById('id_working_days');
-    const fillingValueInput = document.getElementById('id_filling_values');
-
+    const withdrawalModeSelect = document.getElementById('id_withdrawal_mode');
+    const fillingInput = document.getElementById('id_filling_value');
+        
     // Función para calcular los días entre dos fechas
-    function calculateDays() {
-        const startDate = new Date(startDateInput.value);
-        const requestDate = new Date(requestDateInput.value);
+    window.calculateDays = function() {
+        // Asegura que el campo start_date tiene un valor
+        if (!startDateInput.value || !requestDateInput.value) return;
 
-        // Verificar que ambas fechas sean válidas
-        if (isValidDate(startDate) && isValidDate(requestDate)) {
-            const dayDifference = Math.max(0, Math.ceil((requestDate - startDate) / (1000 * 3600 * 24))); // Diferencia en días
-            totalDaysInput.value = dayDifference; // Mostrar solo números positivos
-        } else {
-            totalDaysInput.value = ''; // Limpiar si hay alguna fecha no válida
-        }
+        // Extraer y transformar las fechas en días
+        const [sdday, sdmonth, sdyear] = startDateInput.value.split('/');
+        const startDays = parseInt(sdday) + parseInt(sdmonth) * 30 + parseInt(sdyear) * 360;
+    
+        const [rdday, rdmonth, rdyear] = requestDateInput.value.split('/');
+        const requestDays = parseInt(rdday) + parseInt(rdmonth) * 30 + parseInt(rdyear) * 360;
+    
+        // Calcular la diferencia en días
+        const dayDifference = Math.max(0, requestDays - startDays);
+    
+        // Asignar el resultado al campo correspondiente
+        totalDaysInput.value = dayDifference;
 
-        calculateWorkingDays(); // Actualiza días trabajados
+        calculateWorkingDays();
     }
 
     // Función para calcular los días trabajados (working days)
     function calculateWorkingDays() {
-        const totalDays = parseInt(totalDaysInput.value) || 0; // Asegurarse de que sean números
+        const totalDays = parseInt(totalDaysInput.value) || 0;
         const noWorkDays = parseInt(noWorkDaysInput.value) || 0;
 
-        const workingDays = Math.max(0, totalDays - noWorkDays); // Restar días no trabajados de días totales
-        workingDaysInput.value = workingDays; // Mostrar solo números positivos
+        const workingDays = Math.max(0, totalDays - noWorkDays);
+        workingDaysInput.value = workingDays;
     }
 
-    // Función para validar si la fecha es válida
-    function isValidDate(date) {
-        return !isNaN(date.getTime());
+    // Función para actualizar el campo radicado según el modo de retiro
+    function updateFilling() {
+        if (withdrawalModeSelect.value === 'D') {
+            fillingInput.value = 0;
+            fillingInput.readOnly = true;
+        } else {
+            fillingInput.value = "";
+            fillingInput.readOnly = false;
+        }
     }
 
-    // Función para agregar eventos
+    function FillingValue() {
+        if (withdrawalModeSelect.value === 'D') {
+            fillingValue.value = 0;
+            fillingValue.readOnly = true;
+        }
+    }
+
+    // Agregar eventos para calcular días y actualizar radicado
     function addEventListeners() {
-        requestDateInput.addEventListener('blur', calculateDays);
+        requestDateInput.addEventListener('input', calculateDays);
         totalDaysInput.addEventListener('blur', calculateWorkingDays);
         noWorkDaysInput.addEventListener('blur', calculateWorkingDays);
+        withdrawalModeSelect.addEventListener('change', updateFilling);
     }
 
-    // Agregar eventos
+    // Llamar a la función al cargar la página en caso de que ya haya un valor seleccionado
     addEventListeners();
+    FillingValue();
 });
