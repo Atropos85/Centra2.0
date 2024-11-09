@@ -5,8 +5,8 @@ function autocomplete(inputSelector, resultsSelector, service, fieldMapping, cle
     $(document).on('input', inputSelector, function() {
         var query = $(this).val();
         var url = $(this).data('url');
-        var finalUrl = `${url}?q=${query}&service=${service}`;        
-        if (query.length > 2) {
+        var finalUrl = `${url}?q=${query}&service=${service}`;      
+        if (query.length > 2) { 
             $.ajax({
                 url: finalUrl,
                 data: {
@@ -39,14 +39,50 @@ function autocomplete(inputSelector, resultsSelector, service, fieldMapping, cle
                 error: function(xhr, status, error) {
                     console.error("Error en la solicitud AJAX:", error);
                 }
-            });
+            });            
+        } else {
+            $(resultsSelector).empty();  // Limpiar la lista de autocompletado
+            $results.hide(); // Oculta la lista si no hay resultados
         }
     });
 
     // Limpiar campos si el valor en el input cambia
-    $(document).on('input', inputSelector, function() {        
-        if (selectedItem && $(this).val() !== selectedItem.data('vnumber_id')) {
-            clearFieldsFunction(fieldMapping,inputSelector);
+    $(document).on('input', inputSelector, function() {  
+        const keyName = Object.keys(fieldMapping).find(key => fieldMapping[key] === inputSelector);
+        if (selectedItem && $(this).val() !== selectedItem.data(keyName)) {
+            clearFieldsFunction();
+        }
+    });
+}
+
+function clearfieldOnload(inputSelector) {
+    $(document).ready(function() {
+        var initialValue = $(inputSelector).val(); // Capturar el valor al cargar la pantalla
+        var previousValue = initialValue; // Asignar este valor como el valor previo
+        if (initialValue) {
+            $(inputSelector).val(initialValue); // Asignar el valor al campo de autocompletar
+        }
+
+        // Comparar el valor actual con el valor capturado cuando el input cambia
+        $(document).on('input', inputSelector, function() {
+            var currentValue = $(this).val(); // Obtener el valor actual del input
+            // Si el valor ha cambiado, limpiar los campos relacionados
+            if (currentValue !== previousValue) {
+                clearFields();
+            }
+        });
+    });
+}
+
+// Función para limpiar los campos si se mapean más de un campo
+function clearFields() {
+    // Solo limpiamos si hay más de un campo en el mapeo
+    $('.clearable-field').each(function() {
+        const block = $(this).data('block');
+        if (block === 1) {
+            $(this).val('').prop('disabled', true); // Deshabilita y limpia
+        } else if (block === 2) {
+            $(this).val('').prop('disabled', false); // Habilita y limpia
         }
     });
 }
@@ -63,25 +99,60 @@ function fillFields(selectedItem, fieldMapping) {
     });
 }
 
-// Función para limpiar los campos si se mapean más de un campo
-function clearFields(fieldMapping,inputSelector) {
-    // Solo limpiamos si hay más de un campo en el mapeo
-    if (Object.keys(fieldMapping).length > 1) {
-        $.each(fieldMapping, function(_, selector) {
-            // Comprobar si el selector no es el campo actual
-            if (selector !== inputSelector) {
-                $(selector).val('').prop('disabled', true);
-            }
-        });
-    }
-}
-
-// Función para obtener el valor de cesantías anteriores (llamada condicionalmente)
 function fetchPreviousSeveranceValue(number_ID) {
     fetch(`../get_previous_severance_value_ajax/${number_ID}/`)
         .then(response => response.json())
         .then(data => {
             $('#id_previous_severance_value').val(data.previous_severance_value || 0);
+            // Llamar a la función para renderizar la historia en el template
+            renderHistory(data.history);
         })
         .catch(error => console.error('Error fetching severance value:', error));
 }
+
+function renderHistory(history) {
+    const historyTableBody = $('#history-table tbody'); // Asumiendo que tienes una tabla con ID 'history-table'
+    historyTableBody.empty(); // Limpiar tabla existente
+
+    // Llenar la tabla con datos de history
+    history.forEach(hist => {
+        historyTableBody.append(`
+            <tr>
+                <td>${hist.request_ID}</td>
+                <td>${hist.resolution_number}</td>
+                <td>${hist.resolution_date}</td>
+                <td>${hist.severance_disbursed_value}</td>
+            </tr>
+        `);
+    });
+}
+
+// JavaScript con jQuery para manejar el Datepicker
+$(document).ready(function() {
+    // Función para inicializar el datepicker
+    function initializeDatepicker() {
+        $('.datepicker').each(function() {
+            if (!$(this).prop('readonly')) {  // Solo inicializa si el elemento no tiene readonly
+                $(this).datepicker({
+                    format: 'dd/mm/yyyy',
+                    autoclose: true,
+                    todayHighlight: true,
+                    placeholder: 'Ingrese fecha',
+                }).on('changeDate', function() {
+                    calculateDays(); // Llama directamente a calculateDays si el datepicker está activo
+                });
+            } else {
+                // Si el campo es readonly, destruye el datepicker si ya está inicializado
+                $(this).datepicker('destroy');
+            }
+        });
+    }
+
+    // Inicializa el datepicker al cargar la página
+    initializeDatepicker();
+
+    // Escucha cambios en todos los campos de tipo datepicker para re-inicializar si es necesario
+    $('.datepicker').on('change', function() {
+        initializeDatepicker(); // Re-inicializa el datepicker para reflejar el estado actual
+    });
+});

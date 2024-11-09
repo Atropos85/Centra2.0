@@ -1,0 +1,456 @@
+/*** NAV-BAR ***/
+    .gradient-custom {
+    background: linear-gradient(to left, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+    }
+    .navbarSupportedContent {
+    width: 100%;  
+    justify-content: center;  
+    }
+    .navbar-nav .nav-link, .navbar-brand, .form-inline .nav-link {
+        color: black !important;
+    }
+    .content-custom {
+    margin-top: 20px;
+    width: 75%; /* O cualquier porcentaje o valor que desees */
+    margin-left: auto; 
+    margin-right: auto; 
+    }
+
+    .panel.with-nav-tabs .panel-heading{
+        padding: 5px 5px 0 5px;
+    }
+    .panel.with-nav-tabs .nav-tabs{
+        border-bottom: none;
+    }
+    .panel.with-nav-tabs .nav-justified{
+        margin-bottom: -1px;
+    }
+
+/*** NAV-TAB ***/
+    .with-nav-tabs.panel-primary .nav-tabs > li > a,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+        color: #f7f2f2;
+        background-color: #4f8ce7;
+    }
+    .with-nav-tabs.panel-primary .nav-tabs > .open > a,
+    .with-nav-tabs.panel-primary .nav-tabs > .open > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > .open > a:focus,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li > a:focus {
+        color: #4b79ad;
+        background-color: #b1c3f3;
+        border-color: transparent;
+    }
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a,
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a:hover,
+    .with-nav-tabs.panel-primary .nav-tabs > li.active > a:focus {
+        color: #6cbee7;
+        background-color: #fbf5fc;
+        border-color: #428bca;
+        border-bottom-color: transparent;
+    }
+
+    .error-messages {
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+        padding: 10px;
+        border-radius: 4px;
+        list-style-type: none;
+        margin: 5px 0;
+    }
+    
+    .success-messages {
+        color: #155724;
+        background-color: #d4edda;
+        border: 1px solid #c3e6cb;
+        padding: 10px;
+        border-radius: 4px;
+        list-style-type: none;
+        margin: 5px 0;
+    }
+    
+/*** GENERAL STYLE ***/
+    legend {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .cesantias-outside-form-text {
+        font-size: 1.2rem; /* Tamaño más grande del texto */
+        font-weight: bold; /* Negrita */
+        display: flex;
+        gap: 10px; /* Espacio entre el label y el valor */
+        position: relative; /* Asegura que los resultados se posicionen respecto al input */
+        margin-bottom: 20px;
+    }
+
+    /* Estilos personalizados para el HTML específico */
+    .cesantias-fieldset-container {
+        justify-content: center; /* Centra los items horizontalmente */
+        margin: 0 auto; /* Centra el contenedor */
+    }
+    
+    .cesantias-fieldset.cesantias {
+        padding: 10px; /* Espacio interno del fieldset */
+        margin-top: 10px;
+        border: none; /* Sin borde */
+        border-radius: 5px; /* Esquinas redondeadas */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Sombra */
+    }
+
+    .title-label {
+        display: block;
+        margin-bottom: 0; /* Elimina el margen inferior para una mejor alineación */
+        width: 290px; /* Ancho fijo para los labels, ajusta según sea necesario */
+        font-weight: bold;
+    }
+
+    .cesantias-label {
+        display: block;
+        margin-bottom: 0; /* Elimina el margen inferior para una mejor alineación */
+        width: 200px; /* Ancho fijo para los labels, ajusta según sea necesario */
+        font-weight: bold;
+    }
+
+    .cesantias-input input, 
+    .cesantias-input span{
+        padding: 8px;
+        height: 30px;
+        width: 100%;
+        border-radius: 7px; /* Ajusta el valor para redondear las esquinas */
+        border: 1px solid #cccccc; /* Opcional: estilo y color del borde */
+    }
+
+    .cesantias-input select {
+        border: 1px solid #88a5e4; /* Opcional: estilo y color del borde */
+        background-color: #faf9f9; /* Color de fondo */
+        color: #333; /* Color del texto */
+    }
+
+    .cesantias-input input:focus {
+        border: 2px solid #4a90e2; /* Cambia el color del borde al seleccionar */
+        outline: none; /* Elimina el contorno predeterminado */
+        background-color: #f0f8ff; /* Opcional: Cambia el fondo al seleccionar */
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Agrega una sombra */
+        border-radius: 8px; /* Mantiene el borde redondeado si lo deseas */
+    }
+
+    input[readonly], select[readonly], textarea[readonly], .datepicker[readonly] {
+        background-color: #e9ecef;; /* Fondo gris claro */
+        color: #555; /* Cambia el color del texto */
+        border: 1px solid #ccc; /* Estilo de borde */
+        cursor: not-allowed; /* Muestra un cursor de "no permitido" */
+    }
+
+    /*** LIST REQUEST.HTML ***/
+    .list-btn {
+        background-color: transparent;
+        color: #007bff; /* Color del ícono */
+        border: none; 
+        padding: 2px;
+        cursor: pointer;
+        font-size: 20px; /* Tamaño del ícono */
+        outline: none; /* Quitar borde de enfoque */
+    }
+
+    .list-table-bordered {
+        border: 2px solid #007bff; /* Color del borde azul */
+    }
+
+    .list-table-bordered th,
+    .list-table-bordered td {
+        border: 1px solid #007bff; /* Borde de las celdas */
+    }
+
+    .list-table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f0f7ff; /* Color de fondo alterno con un tono muy claro de azul */
+    }
+
+    .list-table-hover tbody tr:hover {
+        background-color: #d6e9ff; /* Color de fondo al pasar el mouse por encima */
+    }
+    input[type=number] {
+      width: 100%; /* Ajusta el ancho que desees */
+    }
+
+/*** OFFICIAL.HTML ***/
+    /* Estilo para el input del autocompletar */
+    .autocomplete-input {
+        width: 220px; /* Ajusta el ancho del input */
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px; /* Asegura un margen entre el input y los resultados */
+    }
+
+    .autocomplete-input:focus {
+        border: 2px solid #4a90e2; /* Cambia el color del borde al seleccionar */
+        outline: none; /* Elimina el contorno predeterminado */
+        background-color: #f0f8ff; /* Opcional: Cambia el fondo al seleccionar */
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5); /* Agrega una sombra */
+        border-radius: 8px; /* Mantiene el borde redondeado si lo deseas */
+    }
+
+    /* Estilo para la lista de resultados */
+    .autocomplete-results {
+        position: absolute;
+        top: 30px;
+        z-index: 1000;
+        background-color: white;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        width: 450px; /* Mismo ancho que el input */
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        max-height: 200px;
+        overflow-y: auto;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Estilo para los ítems de la lista */
+    .autocomplete-results li {
+        padding: 10px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    /* Estilo para los ítems al pasar el mouse */
+    .autocomplete-results li:hover {
+        background-color: #f0f0f0;
+    }
+
+    /* Estilo para el ítem seleccionado */
+    .autocomplete-results li.selected {
+        background-color: #e0e0e0;
+    }
+
+/*** CERTIFICATIONS.HTML ***/
+    /* Estilos personalizados para el HTML específico */
+    .formset-container {
+        display: flex;
+        flex-wrap: wrap; /* Permite que los formularios se ajusten si la pantalla es muy pequeña */
+        margin-top: 20px; /* Espacio en la parte superior */
+        justify-content: center; /* Centra los items horizontalmente */
+    }
+
+    .formset-group {
+        display: flex; /* Usamos flex para alinear los formsets en una fila */
+        justify-content: center; /* Centra los formsets dentro de este contenedor */
+        gap: 10px; /* Espacio entre los formsets */
+        width: 90%; /* Ajusta el ancho de cada item a 45% */
+    }
+
+    .formset-item {
+        width: 44%; /* Ajusta el ancho de cada item a 45% */
+        padding: 10px;
+        box-sizing: border-box; /* Incluye el padding en el cálculo del ancho total */
+        border: 1px solid #68b5ec; /* Agrega un borde personalizado */
+        border-radius: 5px; /* Esquinas redondeadas */
+        background-color: #f8f9fa; /* Fondo claro para los formsets */
+        display: flex; /* Hacer que los elementos dentro se comporten como flex */
+        flex-direction: column; /* Apilar los elementos en vertical */
+        align-items: flex-start; /* Alinear los elementos al inicio del contenedor */
+    }
+
+    .cert-form-group {
+        margin-bottom: 15px;
+        display: flex; /* Hace que el label y el input estén en la misma línea */
+        align-items: center; /* Alinea verticalmente el contenido */
+        width: 100%; /* Asegura que el form-group ocupe todo el ancho */
+    }
+
+    .cert-label {
+        display: block;
+        margin-bottom: 0; /* Elimina el margen inferior para una mejor alineación */
+        width: 200px; /* Ancho fijo para los labels, ajusta según sea necesario */
+        font-weight: bold;
+    }
+
+    .cert-input input,
+    .cert-input span,
+    .cert-input, select {
+        height: 30px;
+        width: 100%;
+        border-radius: 7px; /* Ajusta el valor para redondear las esquinas */
+        border: 1px solid #ccc; /* Opcional: estilo y color del borde */
+    }
+
+    .cert-input input:focus,
+    .cert-input select:focus{
+        border: 2px solid #4a90e2 !important;
+        outline: none !important;
+        background-color: #f0f8ff !important;
+        box-shadow: 0 0 5px rgba(74, 144, 226, 0.5) !important;
+        border-radius: 8px !important;
+    }
+
+/*** PROCESS.HTML ***/
+    /* Contenedor que envuelve todos los fieldsets */
+    .process-fieldset-container {
+        display: flex;
+        flex-wrap: wrap; /* Se adapta a pantallas más pequeñas en filas */
+        gap: 20px; /* Espacio entre los fieldsets */
+        justify-content: center; /* Centra los fieldsets horizontalmente */
+        margin-left:20px;
+        margin-right:20px;
+    }
+
+    .process-fieldset.process {
+        flex: 1; /* Cada fieldset ocupa el mismo espacio */
+        min-width: 300px; /* Asegura un ancho mínimo para los fieldsets */
+        padding: 10px; /* Espacio interno del fieldset */
+        border: 1px solid #68b5ec; /* Borde personalizado */
+        margin-top: 10px;
+    }
+
+    .process-.form-group {
+        display: flex;
+        flex-direction: column; /* Label arriba, input debajo */
+    }
+
+    .process-label {
+        margin-top: 5px;
+        font-weight: bold;
+        width: 100%; /* Ocupa todo el ancho del contenedor */
+    }
+
+/*** HISTORY.HTML & WAGE.HTML ***/
+    /* Estilo para centrar los encabezados */
+    .cesantias-table {
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;      
+        border: 2px solid #68b5ec; /* Borde sólido de 2px con color #68b5ec */
+        border-collapse: collapse; /* Colapsar bordes entre celdas */
+        width: 50%; /* Establecer el ancho de la tabla */
+    }
+    .cesantias-table td, .ces-table th {
+        border: 1px solid #68b5ec; /* Borde para celdas */
+        white-space: nowrap; /* Evitar salto de línea */
+        overflow: hidden; /* Ocultar el desbordamiento de texto */
+        text-overflow: ellipsis; /* Agregar puntos suspensivos si el texto es muy largo */
+    }
+    .cesantias-table input {
+        background-color: transparent; /* Fondo transparente */
+        border: none; /* Opcional: eliminar bordes */
+        color: inherit; /* Mantener el color del texto de la fila */
+    }
+    /* Estilo adicional para ajustar padding y bordes si es necesario */
+    .cesantias-table input:focus {
+        outline: none; /* Eliminar el borde al hacer focus */
+    }
+    .cesantias-table th {
+        background-color: #9cd0f5; /* Azul claro */
+        text-align: center;
+        font-size: 18px;
+    }
+
+    /* Estilo para cambiar el color del stripe */
+    .cesantias-table tbody tr:nth-of-type(even) {
+        background-color: #e3f2fd; /* Azul claro */
+    }
+
+    /* Ajustar márgenes y padding para la tabla condensada */
+    .cesantias-table-condensed tbody td, .table-condensed tbody th {
+        padding: 1px; /* Reducir el padding de la tabla */
+    }
+    .calculated-value {
+        display: block; /* Para simular el comportamiento de un input */
+        padding: 5px;
+        border: 1px solid #ccc;
+        background-color: transparent;
+    }
+
+/*** SEVERANCE.HTML ***/
+    /* Estilos personalizados para el HTML específico */
+    .severance-fieldset-container {
+        display: flex;
+        flex-wrap: nowrap; /* Mantiene los fieldsets en una fila */
+        gap: 20px; /* Espacio entre los fieldsets */
+        justify-content: center; /* Centra los items horizontalmente */
+        max-width: 1200px; /* Establece un ancho máximo para el contenedor */
+        margin: 0 auto; /* Centra el contenedor */
+    }
+    
+    .severance-fieldset.severance {
+        flex: 0 0 48%; /* Establece el ancho del flex item al 48% (un poco menos del 50% para evitar el overflow) */
+        min-width: 300px; /* Asegura un ancho mínimo para los fieldsets */
+        padding: 10px; /* Espacio interno del fieldset */
+        border: 1px solid #68b5ec; /* Borde personalizado */
+        margin-top: 10px;
+    }
+    
+    .severance-form-group {
+        margin-bottom: 15px;
+        display: flex; /* Hace que el label y el input estén en la misma línea */
+        align-items: center; /* Alinea verticalmente el contenido */
+        width:100%;
+    }
+
+/*** REPORTS.HTML ***/
+
+    /* Estilos para la sidebar */
+    .sidebar {
+        position: fixed;
+        top: 12%;
+        right: -284px; /* Inicialmente oculta la sidebar fuera de la pantalla */
+        height: 75%;
+        width: 300px;
+        padding: 15px;
+        background: #e9f1fa;
+        z-index: 1000;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        transition: right 0.3s ease; /* Añade una animación suave */
+    }
+
+    /* Estilos para el botón toggle */
+    #toggleSidebar {
+        position: fixed;
+        top: 16%; /* Coloca el botón en el medio vertical de la pantalla */
+        right: 0;
+        z-index: 1100; /* Asegura que el botón esté encima de la sidebar */
+        transform: translateY(-50%);
+        background-color: transparent;
+        color: #007bff; /* Color del ícono */
+        border: none; 
+        padding: 10px;
+        cursor: pointer;
+        font-size: 40px; /* Tamaño del ícono */
+        transition: right 0.3s ease; /* Añade transición al botón */
+        margin-right: -10px;
+        outline: none; /* Quitar borde de enfoque */
+    }
+
+    .checkbox-group {
+        margin: 15px 0;
+        display: flex;
+        justify-content: left;
+        align-items: left;
+    }
+
+    .checkbox-group label {
+        margin-left: 10px;
+    }
+
+    .text-center h2 {
+        margin-bottom: 30px; /* Espaciado debajo del título */
+    }
+
+    .btn-container {
+        margin-top: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sidebar.open {
+        right: 0; /* Mostrar sidebar cuando está abierta */
+    }

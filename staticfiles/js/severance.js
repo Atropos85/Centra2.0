@@ -57,12 +57,21 @@ document.addEventListener('DOMContentLoaded', function () {
         if (withdrawField.value === "D") {
             disbursed = balance;
         } else {
-            disbursed = filling > balance ? balance - filling : filling;
+            disbursed = filling > balance ? balance : filling;
         }
 
         disbursedSeveranceField.value = disbursed >= 0 ? disbursed.toFixed(2) : 0;
     }
 
+    function formatCurrency(input) {
+        let value = parseFloat(input.value.replace(/[^0-9.-]+/g, ""));
+        if (!isNaN(value)) {
+            input.value = new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+            }).format(value);
+        }
+    }
     // Mapear los campos con sus factores y objetivos
     const fieldMapping = [
         { origin: 'id_wage', target: 'wage_doc', factor: 1 },

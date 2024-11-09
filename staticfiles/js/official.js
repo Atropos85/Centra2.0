@@ -15,10 +15,15 @@
                 'vno_work_days': '#id_no_work_days',
                 'severancePrev':'#id_previous_severance_value'
             };
-        
+
             // Llamada a la función de autocompletar con la lógica de limpiar y llenar campos
             autocomplete('#id_number_ID', '#autocomplete-results', 'official_autocomplete', fieldMapping, function() {
-                clearFields(fieldMapping,'#id_number_ID');  // Utilizar la función genérica de limpiar campos
+                clearFields('#id_number_ID');  // Utilizar la función genérica de limpiar campos
+            });
+            clearfieldOnload('#id_number_ID', function() {
+                clearFields('#id_number_ID');
+        
             });
         });
+        
         
