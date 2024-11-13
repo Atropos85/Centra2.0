@@ -51,8 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function FillingValue() {
         if (withdrawalModeSelect.value === 'D') {
-            fillingValue.value = 0;
-            fillingValue.readOnly = true;
+            fillingInput.value = 0;
+            fillingInput.readOnly = true;
         }
     }
 
