@@ -37,7 +37,7 @@ class RequestCreate:
             official_instance = request_instance.official_ID
             num_certifications = certifications.count() 
   
-            history_list = get_request_history(official_instance.number_ID)
+            history_list = get_request_history(request_id,official_instance.number_ID)
         else:
             request_instance = Request()
             request_detail_instance = RequestDetail()
@@ -59,11 +59,18 @@ class RequestCreate:
    
         if request.method == 'POST':
             if request_id:
-                official_form = OfficialForm(instance=official_instance)      
+                official_form = OfficialForm(instance=official_instance)   
+                requestActive = None   
             else:
                 number_id = request.POST.get('number_ID')
                 official_instance = Official.objects.filter(number_ID=number_id).first()
                 official_form = OfficialForm(instance=official_instance)  
+
+                requestActive = get_request_active(official_instance.official_ID )            
+
+                if requestActive:
+                    reqAct = requestActive.request_ID
+                    messages.error(request, f'Existe una solicitud activa. Por favor validar la siguiente solicitud: {reqAct}')
 
             no_work_days_instance = NoWorkDays.objects.filter(official_ID=official_instance.official_ID).first()
             no_work_days_form = NoWorkDaysForm(request.POST or None, instance=no_work_days_instance)
@@ -75,7 +82,7 @@ class RequestCreate:
             request_detail_form = RequestDetailForm(request.POST, instance=request_detail_instance)
             cert_formset = CertificationsFormSet(request.POST, queryset=certifications)
             
-            if request_form.is_valid() and wage_factors_form.is_valid() and request_detail_form.is_valid() and cert_formset .is_valid():
+            if request_form.is_valid() and wage_factors_form.is_valid() and request_detail_form.is_valid() and cert_formset .is_valid() and requestActive == None:
                 if request_form.has_changed():  # Solo guarda si hubo cambios en el formulario de solicitud
                     request_instance = request_form.save(commit=False)
                     request_instance.official_ID = official_instance
@@ -109,7 +116,8 @@ class RequestCreate:
                 messages.success(request, 'Solicitud creada/actualizada con éxito.')
                 valid = True
                 request_ID = request_instance.pk
-            else:                
+            else:    
+                print(requestActive)            
                 messages.error(request, 'Por favor corrige los errores en el formulario.')
                 valid = False
                 request_ID = None
@@ -125,21 +133,31 @@ class RequestCreate:
             
         return request_form, request_detail_form, wage_factors_form, cert_formset, official_form, visible_fields, history, valid, request_ID
     
+def get_request_active(official_ID):
+    request = Request.objects.filter(official_ID=official_ID,
+                                     request_state__gte=1,
+                                     request_state__lte=5
+                                    ).first()   
+    return request 
 
-def get_request_history(number_ID):
+def get_request_history(request_ID,official_ID):
     # Filtra las solicitudes por estado y por el funcionario correspondiente
-    official = get_object_or_404(Official, number_ID=number_ID)
+    official = get_object_or_404(Official, number_ID=official_ID)
     
     history = Request.objects.filter(
     official_ID=official,
     request_state__gte=5,
     request_state__lte=9
     )    
-    # Sumar el valor del campo filling_value
+    
+    if request_ID:
+        request = get_object_or_404(Request, request_ID=request_ID)
+        request_date =  request.request_date
+        history = history.filter(request_date__lt = request_date)
     return history
 
-def get_previous_severance_value(number_ID):
-    history = get_request_history(number_ID)
+def get_previous_severance_value(request_ID, number_ID):
+    history = get_request_history(request_ID, number_ID)
     total_filling_value = history.aggregate(Sum('filling_value'))['filling_value__sum'] or 0
     return history, total_filling_value
 
