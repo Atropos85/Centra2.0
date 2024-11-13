@@ -81,8 +81,9 @@ class RequestCreate:
             wage_factors_form = WageFactorsForm(request.POST, instance=wage_factors_instance)
             request_detail_form = RequestDetailForm(request.POST, instance=request_detail_instance)
             cert_formset = CertificationsFormSet(request.POST, queryset=certifications)
-            
+            print("Datos del formulario:", request_form.data)
             if request_form.is_valid() and wage_factors_form.is_valid() and request_detail_form.is_valid() and cert_formset .is_valid() and requestActive == None:
+               
                 if request_form.has_changed():  # Solo guarda si hubo cambios en el formulario de solicitud
                     request_instance = request_form.save(commit=False)
                     request_instance.official_ID = official_instance
@@ -116,8 +117,7 @@ class RequestCreate:
                 messages.success(request, 'Solicitud creada/actualizada con éxito.')
                 valid = True
                 request_ID = request_instance.pk
-            else:    
-                print(requestActive)            
+            else:              
                 messages.error(request, 'Por favor corrige los errores en el formulario.')
                 valid = False
                 request_ID = None

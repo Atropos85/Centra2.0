@@ -545,12 +545,12 @@ class RequestForm(forms.ModelForm):
 
         self.fields['no_work_days'].widget.attrs.update({
             'class': 'clearable-field', 
-            'data-block': '1'
+            'data-block': '2'
         })
 
         self.fields['total_days'].widget.attrs.update({
             'class': 'clearable-field', 
-            'data-block': '2'
+            'data-block': '1'
         })
 
         self.fields['working_days'].widget.attrs.update({

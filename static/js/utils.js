@@ -80,9 +80,9 @@ function clearFields() {
     $('.clearable-field').each(function() {
         const block = $(this).data('block');
         if (block === 1) {
-            $(this).val('').prop('disabled', true); // Deshabilita y limpia
+            $(this).val('').prop('readonly', true); // Deshabilita y limpia
         } else if (block === 2) {
-            $(this).val('').prop('disabled', false); // Habilita y limpia
+            $(this).val('').prop('readonly', false); // Habilita y limpia
         }
     });
 }
