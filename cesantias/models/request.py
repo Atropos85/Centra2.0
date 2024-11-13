@@ -19,10 +19,10 @@ class Request(models.Model):
 	# Valor del Radicado
     filling_value = models.DecimalField(max_digits=15, decimal_places=2)  
 	# Tipo de Cesantía
-    SEVERANCE_CHOICES = [('D', 'DEFINITIVA'), ('M', 'MONTO'), ('P', 'PARCIAL'), ('R', 'RELIQUIDACION')]
+    SEVERANCE_CHOICES = [('D', 'DEFINITIVA'), ('P', 'PARCIAL')]#, ('R', 'RELIQUIDACION')('M', 'MONTO'), 
     severance_type = models.CharField(max_length=1, choices=SEVERANCE_CHOICES)  
 	# Modo de retiro
-    MODE_CHOICES = [('D', 'DEFINITIVA'), ('E', 'EDUCACION'), ('H', 'HIPOTECARIO'), ('O', 'OTROS'), ('R', 'REPARACIONES LOCATIVAS'), ('V', 'COMPRA VIVIENDA')]
+    MODE_CHOICES = [('D', 'DEFINITIVA'), ('E', 'EDUCACION'), ('H', 'HIPOTECARIO'), ('R', 'REPARACIONES LOCATIVAS'), ('V', 'COMPRA VIVIENDA')]#, ('O', 'OTROS'),
     withdrawal_mode = models.CharField(max_length=1, choices=MODE_CHOICES)  
 	# Días totales
     total_days = models.IntegerField(null=True, blank=True)  
