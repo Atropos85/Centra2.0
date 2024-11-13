@@ -77,7 +77,7 @@ class RequestView:
 def get_previous_severance_value_ajax(request, number_ID):
     # Verifica si es una solicitud AJAX, pero sin bloquear la ejecución
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
-        history_list, total_filling_value = get_previous_severance_value(number_ID)
+        history_list, total_filling_value = get_previous_severance_value(None,number_ID)
         history = [{'request_ID': hist.request_ID, 
                     'resolution_number': hist.resolution_number,
                     'resolution_date':hist.resolution_date,
@@ -89,7 +89,7 @@ def get_previous_severance_value_ajax(request, number_ID):
         })
     else:
         # Permitir que funcione aún si no es AJAX (por ejemplo, en pruebas en el navegador)
-        history_list, total_filling_value = get_previous_severance_value(number_ID)
+        history_list, total_filling_value = get_previous_severance_value(None,number_ID)
         history = [{'request_ID': hist.request_ID, 
                     'resolution_number': hist.resolution_number,
                     'resolution_date':hist.resolution_date,

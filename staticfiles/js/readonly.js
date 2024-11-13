@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (!requestStateValue || !['1','2','3','4','5'].includes(requestStateValue)) {
-        console.log("entra3")
         // Obtener los elementos del formulario
         const reso_dateInput = document.getElementById('id_resolution_date');
         const reso_numInput = document.getElementById('id_resolution_number');
