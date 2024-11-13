@@ -295,17 +295,16 @@
     <p class="text">
         {% if request.withdrawal_mode  == 'E'  %}   
             Que para el retiro parcial de la cesantía para estudio el funcionario cumple con los requisitos contemplados en la Ley 1071 de 2006 y los documentos requeridos 
-            en la solicitud del Formato A-GTH-FR-159, Versión 02, Aprobación del 13/12/2022.
+            en la solicitud del Formato A-GTH-FR-159, Versión 03, Aprobación del 04/10/2024.
         {% elif request.withdrawal_mode  == 'R'  %} 
             Que para el retiro parcial de cesantía para reparaciones locativas, la funcionaria cumple con los requisitos contemplados el Decreto 2755 de 1966, Ley 1071 de 
-            2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-159, Versión 02, Aprobación 13/12/2022.  
+            2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-159, Versión 03, Aprobación del 04/10/2024. 
         {% elif request.withdrawal_mode  == 'H'  %} 
             Que para el retiro parcial de cesantía para abono o pago de crédito hipoteca, el funcionario cumple con los requisitos contemplados el Decreto 2755 de 1966, ley 1071
             de 2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-139, Versión 04, Aprobación 04/10/2024.
         {% elif request.withdrawal_mode  == 'V'  %} 
             Que para la liquidación y reconocimiento de la cesantía parcial retroactiva para adquisición de bien inmueble, el funcionario cumple con los requisitos contemplados 
-            el Decreto 2755 de 1966, reglamentado por el Decreto 888 de 1991, Ley 1071 de 2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-159, 
-            Versión 02.    
+            el Decreto 2755 de 1966, reglamentado por el Decreto 888 de 1991, Ley 1071 de 2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-159, Versión 03, Aprobación del 04/10/2024.
         {% endif %}
     </p>
     <br>   
@@ -324,16 +323,16 @@
             {% endif %}
         se tendrá en cuenta todo el tiempo de servicio comprendido, entre el {{ request.official_ID.start_date }} al {{ request.request_date }}, 
         para un total de días acumulados de {{ request.working_days }}  
-        {% if request.no_work_days  == 0 %}
-            sin
-        {% else %}
-            con
-        {% endif %}
+            {% if request.no_work_days  == 0 %}
+                sin
+            {% else %}
+                con
+            {% endif %}
         interrupción en el servicio. 
     </p>
     <br> 
     <p class="text">
-        Que para la liquidación de la cesantía se tomará no solo el salario fijo, sino  todo lo que reciba el funcionario a cualquier otro título y que 
+        Que para la liquidación de la cesantía retroactiva se tomará no solo el salario fijo, sino  todo lo que reciba el funcionario a cualquier otro título y que 
         implique directa o indirectamente retribución ordinaria y permanente de servicios, tales como las primas, sobresueldos y bonificaciones; pero no la 
         sumas que ocasionalmente se den por mera liberalidad del empleador.  Que en el caso que la funcionaria que haya recibido primas o bonificaciones que 
         no tengan el carácter de mensuales, el promedio de la remuneración se obtendrá de dividir el monto de dichas primas, horas suplementarias o extras 
@@ -351,14 +350,24 @@
     <br>
     <p class="text">Que previamente se le han reconocido por concepto de cesantías parciales la suma de ${{ request.previous_severance_value}} </p>
     <br>
-    <p class="text">Que el saldo de la cesantía parcial es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
+    <p class="text">Que el saldo de la cesantía
         {% if request.withdrawal_mode  == 'D' %}
-            FALTA
+            definitiva es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
+            de acuerdo con el saldo de cesantías y no el valor de la Promesa de Compraventa suscrita.
         {% elif request.withdrawal_mode  == 'E'  %}   
-            FALTA 
+            parcial es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
+            de acuerdo con el valor contemplado en la Orden de Matrícula de la Institución Universitaria {{ request_detail.est_institution }} , con NIT. {{ request_detail.est_nit }}.     
         {% elif request.withdrawal_mode  == 'R'  %} 
-            FALTA 
+            parcial es de ${{ request.balance_severance}}, de acuerdo con el valor
+
+            {% if request.filling_value == request.severance_disbursed_value %}
+                 del contrato de obra adjunto a la presente solicitud. 
+            {% else %}
+                el saldo de cesantías
+            {% endif %}
+
         {% elif request.withdrawal_mode  == 'H'  %} 
+            parcial es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
             las cuales serán abonadas al Crédito Hipotecario No. {{ request_detail.hip_loan_number }} , de acuerdo con lo Certificado por {{ request_detail.hip_bank }} con NIT. {{ request_detail.hip_nit }}
         {% elif request.withdrawal_mode  == 'V'  %} 
             FALTA
@@ -368,10 +377,12 @@
     <br>
     <p class="text">Que el presente acto administrativo se sustenta en la liquidación efectuada por el Grupo de Cesantías de la Dirección de Administración 
         del Talento Humano de la Secretaría de la Función  Pública, con base en la Certificación 
-        {% if certification.cert_number %}
-            No {{ certification.cert_number }}
-        {% endif %}
-         de Tiempo de Servicio, Sueldos y Salarios  del {{ certification.cert_date}} , 
+
+            {% if certification.cert_number %}
+                No {{ certification.cert_number }}
+            {% endif %}
+            
+        de Tiempo de Servicio, Sueldos y Salarios  del {{ certification.cert_date}} , 
         expedida por {{ certification.cert_position}} (E)  de {{ certification.cert_entity_name}} 
     </p>
     <br>
@@ -384,6 +395,7 @@
         <p class="title">RESUELVE </p>
         <br>
         <p class="text"><strong> ARTÍCULO PRIMERO:</strong> Liquidar y reconocer 
+
                 {% if request.withdrawal_mode  == 'D' %}
                     cesantía definitiva retroactiva, 
                 {% elif request.withdrawal_mode  == 'E'  %}   
@@ -401,39 +413,49 @@
                 {% else %}   
                     a la señora 
                 {% endif %}
+
             {{ request.official_ID.names }} {{ request.official_ID.last_names }} 
+            
             con cédula de ciudadanía {{ request.official_ID.number_ID }} , por la suma de {{ valor_en_letras}}  PESOS M/CTE ($ {{ request.severance_disbursed_value}} ), 
-            {% if request.withdrawal_mode  == 'D' %}
-                falta
-            {% elif request.withdrawal_mode  == 'E'  %}   
-                FALTA
-            {% elif request.withdrawal_mode  == 'R'  %} 
-                FALTA
-            {% elif request.withdrawal_mode  == 'H'  %} 
-                como abono al Crédito Hipotecario No. {{ request_detail.hip_loan_number }}, contraído con {{ request_detail.hip_bank }}.,
-            {% elif request.withdrawal_mode  == 'V'  %} 
-                FALTA 
-            {% endif %}
+            
+                {% if request.withdrawal_mode  == 'H'  %} 
+                    como abono al Crédito Hipotecario No. {{ request_detail.hip_loan_number }}, contraído con {{ request_detail.hip_bank }}.,
+                {% elif request.withdrawal_mode  == 'V'  %} 
+                    FALTA 
+                {% endif %}
+
             por el tiempo de servicio comprendido entre {{ request.official_ID.start_date}} al {{ request.request_date}} , para un total de días acumulados de {{ request.working_days}} 
-            {% if request.no_work_days  == 0 %}
-                sin
-            {% else %}
-                con
-            {% endif %}
+                
+                {% if request.no_work_days  == 0 %}
+                    sin
+                {% else %}
+                    con
+                {% endif %}
+
             interrupción en el servicio 
         </p>
         <br>
         <p class="text"><strong>ARTÍCULO SEGUNDO:</strong> Solicitar a la Tesorera de la Secretaría de Hacienda del departamento de Cundinamarca, girar la suma de {{ valor_en_letras}} PESOS M/CTE ($ {{ request.severance_disbursed_value}}), 
             {% if request.withdrawal_mode  == 'D' %}
-            a la señora {{ request.official_ID.names }} {{ request.official_ID.last_names }} con cédula de ciudadanía {{ request.official_ID.number_ID }} 
+                {% if request.official_ID.gender  == 'M' %}
+                  al señora 
+                {% else %}   
+                  a la señora 
+                {% endif %}
+                {{ request.official_ID.names }} {{ request.official_ID.last_names }} con cédula de ciudadanía {{ request.official_ID.number_ID }} 
             {% elif request.withdrawal_mode  == 'E'  %}   
-                FALTA
-            {% elif request.withdrawal_mode  == 'R'  %} 
-                FALTA
+                a la Institución Universitaria {{ request_detail.est_institution }} , con NIT. {{ request_detail.est_nit }}.
             {% elif request.withdrawal_mode  == 'H'  %} 
                 a {{ request_detail.hip_bank }} con NIT. {{ request_detail.hip_nit }}.
             {% elif request.withdrawal_mode  == 'V'  %} 
                 FALTA 
+            {% elif request.withdrawal_mode  == 'R'  %} 
+                {% if request.official_ID.gender  == 'M' %}
+                    al señora 
+                {% else %}   
+                    a la señora 
+                {% endif %}
+                {{ request.official_ID.names }} {{ request.official_ID.last_names }} con cédula de ciudadanía {{ request.official_ID.number_ID }} 
             {% endif %}
             
         </p>

@@ -146,6 +146,21 @@
                     <div class="cesantias-input">{{ request_detail_form.hip_bank }}</div>
                 </div>
             {% endif %}
+
+            {% if show_build_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.holder_position.id_for_label }}">Cargo Titular:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.holder_position }}
+                </div>
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.incharge_position.id_for_label }}">Cargo titular por encargo:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.incharge_position }}
+                </div>
+            {% endif %}
         </fieldset>
 
         <fieldset class="process-fieldset process">

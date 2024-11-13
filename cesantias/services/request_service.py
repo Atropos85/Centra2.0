@@ -81,7 +81,7 @@ class RequestCreate:
             wage_factors_form = WageFactorsForm(request.POST, instance=wage_factors_instance)
             request_detail_form = RequestDetailForm(request.POST, instance=request_detail_instance)
             cert_formset = CertificationsFormSet(request.POST, queryset=certifications)
-            print("Datos del formulario:", request_form.data)
+
             if request_form.is_valid() and wage_factors_form.is_valid() and request_detail_form.is_valid() and cert_formset .is_valid() and requestActive == None:
                
                 if request_form.has_changed():  # Solo guarda si hubo cambios en el formulario de solicitud
@@ -171,6 +171,7 @@ def get_visible_fields(request_state, withdrawal_mode, is_new_request=False):
         'show_def_fields': False,
         'show_study_fields': False,
         'show_hipo_fields': False,
+        'show_build_fields': False,
 
         'show_noti_fields': False,
         'show_fact_fields': False,
@@ -195,6 +196,8 @@ def get_visible_fields(request_state, withdrawal_mode, is_new_request=False):
                 visibility['show_study_fields'] = True
             elif withdrawal_mode == 'H':
                 visibility['show_hipo_fields'] = True
+            elif withdrawal_mode == 'R':
+                visibility['show_build_fields'] = True
 
         if request_state not in [1, 2, 3, 10]:
             visibility['show_noti_fields'] = True
@@ -274,7 +277,8 @@ class RequestReport:
                     or (req.withdrawal_mode == 'D' and detail.def_resolution and detail.def_date and detail.def_position)
                     or (req.withdrawal_mode == 'E' and detail.est_nit and detail.est_institution)
                     or (req.withdrawal_mode == 'H' and detail.hip_loan_number and detail.hip_nit and detail.hip_bank)
-                    or (req.withdrawal_mode not in ['V', 'D', 'E', 'H'])):
+                    or (req.withdrawal_mode == 'R')
+                    or (req.withdrawal_mode not in ['V', 'D', 'E', 'H', 'R'])):
                         reports['check_rep_rso'] = True
                         if req.request_state == 3:
                             req.request_state = 4  # Cambiar el estado a EMISION RESOLUCION
