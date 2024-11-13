@@ -20,9 +20,9 @@
             autocomplete('#id_number_ID', '#autocomplete-results', 'official_autocomplete', fieldMapping, function() {
                 clearFields('#id_number_ID');  // Utilizar la función genérica de limpiar campos
             });
+
             clearfieldOnload('#id_number_ID', function() {
-                clearFields('#id_number_ID');
-        
+                clearFields('#id_number_ID');        
             });
         });
         

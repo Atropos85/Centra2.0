@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // Verificar si el valor no está en ['1', '2','' '10']
     // Estados RADICADA  Y LIQUIDADA PERMITEN ACTUALIZAR LA INFORMACION DE LA SOLICITUD
     if (!requestStateValue || !['1','2','3'].includes(requestStateValue)) {
-        console.log("entra")
         // Obtener los elementos del formulario
         const filling_numInput = document.getElementById('id_filling_number');
         const filling_valInput = document.getElementById('id_filling_value');
@@ -35,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     // Estados RADICADA  Y LIQUIDADA PERMITEN ACTUALIZAR LA INFORMACION DE LA SOLICITUD
     if (!requestStateValue || !['1','2','3','4'].includes(requestStateValue)) {
-        console.log("entra1")
         const cdp_dateInput = document.getElementById('id_cdp_issue_date');
         const cdp_numInput = document.getElementById('id_cdp_number');
         const holderInput = document.getElementById('id_holder_position');
@@ -86,7 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (!requestStateValue || !['1','2','3','4','5'].includes(requestStateValue)) {
-        console.log("entra2")
         // Obtener los elementos del formulario
         const noti_dateInput = document.getElementById('id_notify_date');
 
