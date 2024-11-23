@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Obtener elementos del DOM
     const startDateInput = document.getElementById('id_start_date');
-    const requestDateInput = document.getElementById('id_request_date');
+    const cutoffDateInput = document.getElementById('id_cutoff_date');
     const totalDaysInput = document.getElementById('id_total_days');
     const noWorkDaysInput = document.getElementById('id_no_work_days');
     const workingDaysInput = document.getElementById('id_working_days');
@@ -11,13 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // Función para calcular los días entre dos fechas
     window.calculateDays = function() {
         // Asegura que el campo start_date tiene un valor
-        if (!startDateInput.value || !requestDateInput.value) return;
+        if (!startDateInput.value || !cutoffDateInput.value) return;
 
         // Extraer y transformar las fechas en días
         const [sdday, sdmonth, sdyear] = startDateInput.value.split('/');
         const startDays = parseInt(sdday) + parseInt(sdmonth) * 30 + parseInt(sdyear) * 360;
     
-        const [rdday, rdmonth, rdyear] = requestDateInput.value.split('/');
+        const [rdday, rdmonth, rdyear] = cutoffDateInput.value.split('/');
         const requestDays = parseInt(rdday) + parseInt(rdmonth) * 30 + parseInt(rdyear) * 360;
     
         // Calcular la diferencia en días
@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Agregar eventos para calcular días y actualizar radicado
     function addEventListeners() {
-        requestDateInput.addEventListener('input', calculateDays);
+        cutoffDateInput.addEventListener('input', calculateDays);
         totalDaysInput.addEventListener('blur', calculateWorkingDays);
         noWorkDaysInput.addEventListener('blur', calculateWorkingDays);
         withdrawalModeSelect.addEventListener('change', updateFilling);

@@ -148,7 +148,7 @@ def get_request_history(request_ID,official_ID):
     official_ID=official,
     request_state__gte=5,
     request_state__lte=9
-    )    
+    ).order_by('resolution_date')     
     
     if request_ID:
         request = get_object_or_404(Request, request_ID=request_ID)
@@ -158,7 +158,7 @@ def get_request_history(request_ID,official_ID):
 
 def get_previous_severance_value(request_ID, number_ID):
     history = get_request_history(request_ID, number_ID)
-    total_filling_value = history.aggregate(Sum('filling_value'))['filling_value__sum'] or 0
+    total_filling_value = history.aggregate(Sum('severance_disbursed_value'))['severance_disbursed_value__sum'] or 0
     return history, total_filling_value
 
 def get_visible_fields(request_state, withdrawal_mode, is_new_request=False):

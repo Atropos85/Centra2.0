@@ -433,6 +433,7 @@ class RequestForm(forms.ModelForm):
         fields = [
             'official_ID',
             'request_date',
+            'cutoff_date',
             'request_state',
             'filling_number',
             'filling_value',
@@ -468,6 +469,7 @@ class RequestForm(forms.ModelForm):
             'official_ID':forms.HiddenInput(),
 
             'request_date': forms.DateInput(format='%d/%m/%Y',attrs={'class': 'form-control datepicker','placeholder': 'Escoja fecha',}),
+            'cutoff_date': forms.DateInput(format='%d/%m/%Y',attrs={'class': 'form-control datepicker','placeholder': 'Escoja fecha',}),
             'filling_number':forms.TextInput(attrs={'placeholder': 'Ingrese el numero de radicado','step': '0.01', 'onkeypress': 'return isNumberKey(event)',}),
             'filling_value': forms.TextInput(attrs={'placeholder': 'Ingrese el valor de la solicitud', 'onkeypress': 'return isNumberKey(event)',}),            
             #workindays
@@ -504,6 +506,12 @@ class RequestForm(forms.ModelForm):
         
         # Añadir atributos a cada campo
         self.fields['request_date'].widget.attrs.update({
+            'class': 'clearable-field form-control datepicker', 
+            'data-block': '2'
+        })
+
+        # Añadir atributos a cada campo
+        self.fields['cutoff_date'].widget.attrs.update({
             'class': 'clearable-field form-control datepicker', 
             'data-block': '2'
         })

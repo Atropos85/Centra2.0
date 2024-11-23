@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         calculateValues(factor, origin, target);
     });
 
-    const requestDateField = document.getElementById('id_request_date');
+    const requestDateField = document.getElementById('id_cutoff_date');
     requestDateField.addEventListener('blur', function() {
         calculateTotalseverance();
     });
