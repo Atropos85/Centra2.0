@@ -370,7 +370,7 @@
             parcial es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
             las cuales serán abonadas al Crédito Hipotecario No. {{ request_detail.hip_loan_number }} , de acuerdo con lo Certificado por {{ request_detail.hip_bank }} con NIT. {{ request_detail.hip_nit }}
         {% elif request.withdrawal_mode  == 'V'  %} 
-            FALTA
+            parcial es de ${{ request.balance_severance}} , de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} , de acuerdo con el valor de la Promesa de Compraventa suscrita.
         {% endif %}
             
     </p>
@@ -420,8 +420,6 @@
             
                 {% if request.withdrawal_mode  == 'H'  %} 
                     como abono al Crédito Hipotecario No. {{ request_detail.hip_loan_number }}, contraído con {{ request_detail.hip_bank }}.,
-                {% elif request.withdrawal_mode  == 'V'  %} 
-                    FALTA 
                 {% endif %}
 
             por el tiempo de servicio comprendido entre {{ request.official_ID.start_date}} al {{ request.request_date}} , para un total de días acumulados de {{ request.working_days}} 
@@ -434,9 +432,18 @@
 
             interrupción en el servicio 
         </p>
+        
         <br>
+        {% if request.withdrawal_mode  == 'V'  %} 
+            PARÁGRAFO: Una vez registrada la escritura de compraventa, deberá allegar copia del Certificado de Libertad -
+            Folio de Matrícula Inmobiliaria, a la Dirección de Administración del Talento Humano de la Secretaría de la Función
+            Pública del departamento de Cundinamarca, en un término no mayor a 90 días contados a partir de la fecha de
+            expedición de la presente resolución.
+            <br>
+        {% endif %}
+
         <p class="text"><strong>ARTÍCULO SEGUNDO:</strong> Solicitar a la Tesorera de la Secretaría de Hacienda del departamento de Cundinamarca, girar la suma de {{ valor_en_letras}} PESOS M/CTE ($ {{ request.severance_disbursed_value}}), 
-            {% if request.withdrawal_mode  == 'D' %}
+            {% if request.withdrawal_mode  in ['D', 'R', 'V'] %}
                 {% if request.official_ID.gender  == 'M' %}
                   al señora 
                 {% else %}   
@@ -447,15 +454,6 @@
                 a la Institución Universitaria {{ request_detail.est_institution }} , con NIT. {{ request_detail.est_nit }}.
             {% elif request.withdrawal_mode  == 'H'  %} 
                 a {{ request_detail.hip_bank }} con NIT. {{ request_detail.hip_nit }}.
-            {% elif request.withdrawal_mode  == 'V'  %} 
-                FALTA 
-            {% elif request.withdrawal_mode  == 'R'  %} 
-                {% if request.official_ID.gender  == 'M' %}
-                    al señora 
-                {% else %}   
-                    a la señora 
-                {% endif %}
-                {{ request.official_ID.names }} {{ request.official_ID.last_names }} con cédula de ciudadanía {{ request.official_ID.number_ID }} 
             {% endif %}
             
         </p>

@@ -11,6 +11,8 @@ class Request(models.Model):
     official_ID = models.ForeignKey(Official, on_delete=models.CASCADE, null=True, blank=True)  
     # Fecha de radicación
     request_date = models.DateField()  
+    # Fecha de corte
+    cutoff_date = models.DateField()  
 	# Estado de la solicitud
     STATE_CHOICES = [(1, 'RADICADA'), (2, 'LIQUIDADA'), (3, 'CDP SOLICITADO'), (4, 'EMISION RESOLUCION'), (5, 'NOTIFICADO'), (6, 'RPC SOLICITADO'), (7, 'RPC EMITIDO'), (8, 'PASO A FACTURACION'), (9, 'PROCESO DE PAGO'), ('10', 'RECHAZADO')]
     request_state = models.IntegerField(choices=STATE_CHOICES, default=1, null=True, blank=True)  

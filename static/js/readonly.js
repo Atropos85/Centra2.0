@@ -10,12 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const filling_numInput = document.getElementById('id_filling_number');
         const filling_valInput = document.getElementById('id_filling_value');
         const request_dateInput = document.getElementById('id_request_date'); // DatePicker
+        const cutoff_dateInput = document.getElementById('id_cutoff_date'); // DatePicker 
         const severance_Input = document.getElementById('id_severance_type'); // Select
         const withdrawal_Input = document.getElementById('id_withdrawal_mode'); // Select
 
         filling_numInput.setAttribute('readonly', true)
         filling_valInput.setAttribute('readonly', true)
         request_dateInput.setAttribute('readonly', true)
+        cutoff_dateInput.setAttribute('readonly', true)
         severance_Input.setAttribute('readonly', true)
         withdrawal_Input.setAttribute('readonly', true)
 
