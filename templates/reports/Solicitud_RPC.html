@@ -443,7 +443,7 @@
         {% endif %}
 
         <p class="text"><strong>ARTÍCULO SEGUNDO:</strong> Solicitar a la Tesorera de la Secretaría de Hacienda del departamento de Cundinamarca, girar la suma de {{ valor_en_letras}} PESOS M/CTE ($ {{ request.severance_disbursed_value}}), 
-            {% if request.withdrawal_mode  in ['D', 'R', 'V'] %}
+            {% if request.withdrawal_mode == 'D' or request.withdrawal_mode == 'R' or request.withdrawal_mode == 'V' %}
                 {% if request.official_ID.gender  == 'M' %}
                   al señora 
                 {% else %}   
