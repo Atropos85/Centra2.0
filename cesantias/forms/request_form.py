@@ -482,8 +482,8 @@ class RequestForm(forms.ModelForm):
             #CDP
             'cdp_issue_date': forms.DateInput(format='%d/%m/%Y',attrs={'class': 'form-control datepicker','placeholder': 'Escoja fecha', }),
             'cdp_number': forms.TextInput(attrs={'placeholder': 'Ingrese el numero del CDP', 'step': '0.01', 'onkeypress': 'return isNumberKey(event)',}),
-            'holder_position': forms.TextInput(attrs={'placeholder': 'Ingrese el cargo de la persona','onkeypress': 'return isCharKey(event)',}),
-            'incharge_position': forms.TextInput(attrs={'placeholder': 'Ingrese el cargo encargado','onkeypress': 'return isCharKey(event)',}), 
+            'holder_position': forms.TextInput(attrs={'placeholder': 'Ingrese el cargo de la persona',}),
+            'incharge_position': forms.TextInput(attrs={'placeholder': 'Ingrese el cargo encargado',}), 
             #Emision Resolucion
             'notify_date': forms.DateInput(format='%d/%m/%Y',attrs={'class': 'form-control datepicker','placeholder': 'Escoja fecha' }),
             'resolution_date': forms.DateInput(format='%d/%m/%Y',attrs={'class': 'form-control datepicker','placeholder': 'Escoja fecha', }),
