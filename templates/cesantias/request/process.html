@@ -165,14 +165,6 @@
 
         <fieldset class="process-fieldset process">
             <legend>Emision Resolucion y RPC</legend>
-            {% if show_noti_fields %}
-                <div class="process-form-group">
-                    <label class="process-label" for="{{ request_form.notify_date.id_for_label }}">Fecha de Notificación:</label>
-                </div>
-                <div class="cesantias-input">
-                    {{ request_form.notify_date }}
-                </div>
-            {% endif %}
             {% if show_fact_fields %}
                 <div class="process-form-group">
                     <label class="process-label" for="{{ request_form.resolution_date.id_for_label }}">Fecha de Resolución:</label>
@@ -187,6 +179,16 @@
                     {{ request_form.resolution_number }}
                 </div>
             {% endif %}
+            
+            {% if show_noti_fields %}
+                <div class="process-form-group">
+                    <label class="process-label" for="{{ request_form.notify_date.id_for_label }}">Fecha de Notificación:</label>
+                </div>
+                <div class="cesantias-input">
+                    {{ request_form.notify_date }}
+                </div>
+            {% endif %}
+
             {% if show_rpc_fields %}
                 <div class="process-form-group">
                     <label class="process-label" for="{{ request_form.rpc_request_date.id_for_label }}">Fecha Solicitud RPC:</label>

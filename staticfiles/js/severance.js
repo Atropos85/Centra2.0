@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
         { origin: 'id_food_subsidy', target: 'food_subsidy_doc', factor: 1 },
         { origin: 'id_technical_bonus', target: 'technical_bonus_doc', factor: 1 },
         { origin: 'id_seniority_bonus', target: 'seniority_bonus_doc', factor: 1 },
-        { origin: 'id_accommodation_bonus', target: 'accommodation_bonus_doc', factor: 12 },
+        { origin: 'id_accommodation_bonus', target: 'accommodation_bonus_doc', factor: 1 },
         { origin: 'id_overtime', target: 'overtime_doc', factor: 12 },
         { origin: 'id_dev_by_draw', target: 'dev_by_draw_doc', factor: 12 },
         { origin: 'id_travel_expenses', target: 'travel_expenses_doc', factor: 12 }
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
         calculateValues(factor, origin, target);
     });
 
-    const requestDateField = document.getElementById('id_cutoof_date');
+    const requestDateField = document.getElementById('id_cutoff_date');
     requestDateField.addEventListener('blur', function() {
         calculateTotalseverance();
     });

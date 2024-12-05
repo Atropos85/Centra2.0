@@ -8,21 +8,45 @@ document.addEventListener('DOMContentLoaded', function() {
     const withdrawalModeSelect = document.getElementById('id_withdrawal_mode');
     const fillingInput = document.getElementById('id_filling_value');
         
+    
     // Función para calcular los días entre dos fechas
     window.calculateDays = function() {
         // Asegura que el campo start_date tiene un valor
         if (!startDateInput.value || !cutoffDateInput.value) return;
 
+        const ipartes = startDateInput.value.split("/");
+
+        const idia = (31-ipartes[0]); 
+        const imes = ((13-ipartes[1])*30);  
+        const iaño = (1+parseInt(ipartes[2])); 
+
         // Extraer y transformar las fechas en días
-        const [sdday, sdmonth, sdyear] = startDateInput.value.split('/');
-        const startDays = parseInt(sdday) + parseInt(sdmonth) * 30 + parseInt(sdyear) * 360;
-    
-        const [rdday, rdmonth, rdyear] = cutoffDateInput.value.split('/');
-        const requestDays = parseInt(rdday) + parseInt(rdmonth) * 30 + parseInt(rdyear) * 360;
-    
+        const fpartes = cutoffDateInput.value.split("/");
+        let fecha = new Date(fpartes[2],fpartes[1]-1,fpartes[0]);
+        fecha.setDate(fecha.getDate() + 1);
+        const fec =  fecha.toISOString().split('T')[0]
+        const [year, month, day] = fec.split('-').map(Number);
+        
+        let fdia;
+
+        if (month == fpartes[1]) {
+            fdia = (fpartes[0]); 
+        }
+        else {
+            fdia = 30; 
+        }
+
+        const fmes = ((fpartes[1]-1)*30);  
+        const faño = (parseInt(fpartes[2])-1);  
+
+        const dia1 = (parseInt(idia) + parseInt(imes) + parseInt(fdia))
+
+        const mes1 = (fmes)
+        const año1 = (((faño -iaño) * 12) * 30)
         // Calcular la diferencia en días
-        const dayDifference = Math.max(0, requestDays - startDays);
-    
+
+        const dayDifference = dia1 +  mes1 + año1;
+
         // Asignar el resultado al campo correspondiente
         totalDaysInput.value = dayDifference;
 

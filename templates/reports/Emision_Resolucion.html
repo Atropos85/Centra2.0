@@ -1,5 +1,6 @@
-{% load static %}
 {% csrf_token %}
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,6 +8,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reporte-pdf</title>
     <style>
+        @page {
+
+            margin-top: 30mm;
+            
+            @top-left {
+                content: url("{% static 'images/logo_rep.png' %}");
+                width: 20mm;
+                height: auto;
+            }
+
+            @top-right {
+                content: "Página " counter(page) " de " counter(pages);
+                font-size: 12px;
+                font-weight: bold;
+                color: #333;
+            }
+
+            /* Define el contenido para la esquina inferior izquierda */
+            @bottom-left {
+                content: "LOGOS";
+                font-size: 10px;
+                color: #333;
+            }
+
+            /* Define el contenido para la esquina inferior derecha */
+            @bottom-right {
+                content: "Calle 26 51-53 Bogotá D.C.\A
+                          Sede Administrativa - Torre Central Piso 2\A
+                          Código Postal 111321\A
+                          Teléfono 749 1357";
+                font-size: 10px;
+                color: #333;
+            }
+        }
+        .new-page {
+            page-break-before: always; /* O puedes usar page-break-after: always; */
+        }
+
         body {
             font-family: Arial, sans-serif;
             font-size: 12px;
@@ -49,6 +88,7 @@
             text-align: left;
             font-family: 'Arial', sans-serif; 
             margin: 0px auto 0; /* Esto añade espacio antes de la sección de firmas */
+            text-align: justify;
         }
         .text p {
             line-height: 1; /* Ajuste de la altura de línea para mejor legibilidad */
@@ -111,161 +151,363 @@
         .approved strong {
             font-size: 9px; /* Resalta los nombres */
         }
+        h4 {
+            text-align: center; /* Alinea el texto al centro */
+        }
 </style>
 </head>
 <body>
 
-<div class="container">
+    <!-- Título principal de la resolución -->
+    <h1 class="title">RESOLUCIÓN SFP-______-2024</h1>
+    <p class="text" style="text-align: center;">
+        {% if request.withdrawal_mode  == 'D' %}
+            Por la cual se reconoce cesantía definitiva, con régimen de retroactividad a 
+        {% elif request.withdrawal_mode  == 'E'  %}   
+            Por la cual se reconoce cesantía parcial para estudio, con régimen de retroactividad a
+        {% elif request.withdrawal_mode  == 'R'  %} 
+            Por la cual se reconoce cesantía parcial para reparaciones locativas, con régimen de retroactividad a
+        {% elif request.withdrawal_mode  == 'H'  %} 
+            Por la cual se reconoce cesantía parcial para  abono a crédito hipotecario, con régimen de retroactividad a 
+        {% elif request.withdrawal_mode  == 'V'  %} 
+            Por la cual se reconoce cesantía parcial para adquisición de bien inmueble , con régimen de retroactividad a 
+        {% endif %}
+
+        {% if request.official_ID.gender  == 'M' %}
+            un funcionario 
+        {% else %}   
+            una funcionaria
+        {% endif %}
+    </p>
+    <br>
+    <!-- Descripción y datos de la funcionaria -->
+    <p class="title">LA DIRECTORA DE ADMINISTRACIÓN DEL TALENTO HUMANO  <br>
+            DE LA SECRETARÍA DE LA FUNCIÓN PÚBLICA 
+    </p>
+    <p class="text">
+        En ejercicio de sus atribuciones legales, en especial las conferidas por la Ordenanza 073 de 1995, Decreto Departamental  846 de 1996, Ley 1071 de 2006, Decretos Ordenanzales 254 de 2011 y 510 de 2022, artículo 144, numeral 14, y
+        que en la Planta de Empleos de la {{ request.official_ID.entity_ID.entity_name }}, se encuentra 
+        {% if request.official_ID.gender  == 'M' %}
+            vinculado el señor:
+        {% else %}   
+            vinculada la señora:
+        {% endif %}
     
-    <div class="header">
-        <table class="custom-table">
+    </p>
+    <br>
+    
+        <!-- Tabla con datos personales -->
+        <table class="section">
             <tr>
-                <!-- Primera columna con una sola celda que abarca 3 filas -->
-                <td rowspan="3">
-                    <img src="/static/global/logo_rep.png" alt="Gobernación de Cundinamarca">
-                </td>
-                <td >GESTIÓN FINANCIERA</td>
-                <td>Código: A-GF-FR-014</td>
+                <th>Nombres y Apellidos</th>
+                <td>{{ request.official_ID.names }} {{ request.official_ID.last_names }} </td>
             </tr>
             <tr>
-                <td rowspan="2">Solicitud de RPC</td>
-                <td>Versión: 03</td>
+                <th>Identificación</th>
+                <td>{{ request.official_ID.number_ID }}</td>
             </tr>
-            <tr>              
-                <td>Fecha:09/04/2019</td>
+            <tr>
+                <th>Fecha de Vinculación</th>
+                <td>{{ request.official_ID.start_date }}</td>
+            </tr>
+            <tr>
+                <th>Denominación del empleo titular</th>
+                <td>{{ request.holder_position }}</td>
+            </tr>
+            <tr>
+                <th>Denominación empleo en encargo</th>
+                <td>{{ request.incharge_position }}</td>
             </tr>
         </table>
     </div>
-
-    <!-- Date and Info -->
-    
-    <p class="date">Bogotá D.C., {{ request.settlement_date }} </p>
     <br>
-    <div class="text">
-        <p>Doctora:</p>
-        <p>CAROLINA ROMERO FIGUEROA</p>
-        <p>Directora de Presupuesto</p>
-        <p>Secretaría de Hacienda</p>
-    </div>
-
+    <p class="text">
+        {% if request.official_ID.gender  == 'M' %}
+            Que el señor 
+        {% else %}   
+           Que la señora 
+        {% endif %}
+        {{ request.official_ID.names }} {{ request.official_ID.last_names }}, presentó solicitud de reconocimiento de 
+        
+        {% if request.withdrawal_mode  == 'D' %}
+            cesantía definitiva 
+        {% elif request.withdrawal_mode  == 'E'  %}   
+            cesantía parcial para estudio
+        {% elif request.withdrawal_mode  == 'R'  %} 
+            cesantía parcial para reparaciones locativas
+        {% elif request.withdrawal_mode  == 'H'  %} 
+            cesantía parcial para  abono a crédito hipotecario
+        {% elif request.withdrawal_mode  == 'V'  %} 
+            cesantía parcial para adquisición de bien inmueble
+        {% endif %}
+        
+        , el {{ request.request_date }}  , ante la Dirección de Administración del Talento Humano de la Secretaría de la 
+        Función Pública del departamento de Cundinamarca.
+    </p>
     <br>
-    <p class="text">Atentamente solicito expedir Compromiso de Gastos (RPC) con cargo a la llave presupuestaria:</p>
+    <p class="text">
+        Que en materia de normatividad vigente sobre la retroactividad de las cesantías, se encuentran entre otras, el artículo 17 de la Ley 6ª de 1945, artículo 
+        1º de la Ley 65 de 1946, Decreto 1160 de 1947, Decreto 2755 de 1966 y  Decreto 1252 de 2000.  
+    </p>
     <br>
-    
-    <h4 class="title">SECCIÓN PRESUPUESTAL</h4>
-    <h5 class="title">Código: 1114</h5>
-    <table class="section">
-        <tr>
-            <th>Dato Maestro</th>
-            <th>Código SAP</th>
-        </tr>
-        <tr>
-            <td>Fondo</td>
-            <td>{{ request.official_ID.entity_ID.fund }}</td>
-        </tr>
-        <tr>
-            <td>Área Funcional</td>
-            <td>9/999/EC</td>
-        </tr>
-        <tr>
-            <td>Posición Presupuestal</td>
-            <td>{{ request.official_ID.entity_ID.posPre }}</td>
-        </tr>
-        <tr>
-            <td>Programa Presupuestario</td>
-            <td>999999</td>
-        </tr>
-        <tr>
-            <td>Elemento PEP</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Pedido No.:</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Reserva de recursos. CDP:</td>
-            <td>{{ request.cdp_number }} </td>
-        </tr>
-        <tr>
-            <td>Objeto: Cesantía</td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>Valor</td>
-            <td>$ {{ request.severance_disbursed_value}}</td>
-        </tr>
-        <tr>
-            <td>Beneficiario:</td>
-            <td>{{ request.official_ID.names }} {{ request.official_ID.last_names }}</td>
-        </tr>
-        <tr>
-            <td>C.C.:</td>
-            <td> {{ request.official_ID.number_ID }}</td>
-        </tr>
-    </table>
-
-    <!-- Clase Documento -->
-    <h4 class="title">CLASE DOCUMENTO</h4>
-    <h5 class="title">(Marcar con x)</h5>
-    <table class="section">
-            <thead>
-                <tr>
-                    <th>Código</th>
-                    <th>Clase Documento</th>
-                    <th>Descripción</th>
-                    <th>Marcado</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>C0</td>
-                    <td>Gastos Directos:</td>
-                    <td>Gastos no asociados con compras y/o contrataciones (Parafiscales, seguridad social, servicios públicos, seguros, resoluciones, gastos cajas menores, etc.)</td>
-                    <td><strong>X</strong></td>
-                </tr>
-                <tr>
-                    <td>C1</td>
-                    <td>Deuda Pública:</td>
-                    <td>Gastos por concepto del servicio de la deuda (Amortización, Intereses, comisiones, gastos financieros, etc.)</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>C2</td>
-                    <td>Nómina:</td>
-                    <td>Gastos relacionados con la nómina y sus gastos derivados (sueldos, gastos personales, etc.)</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>C3</td>
-                    <td>Transferencias:</td>
-                    <td>Erogaciones transferidas a otros organismos públicos o privados (Contraloría, transferencias a descentralizadas, pago urgencias, serv. Públicos a colegios, etc.)</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>C4</td>
-                    <td>Cajas menores:</td>
-                    <td>Fondos fijos</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>C5</td>
-                    <td>Deuda Pública CXp:</td>
-                    <td>Pago Operaciones Conexas</td>
-                    <td></td>
-                </tr>
-            </tbody>
-    </table>
-    
+    <p class="text">        
+        Que la anterior normatividad le es aplicable a aquellos trabajadores del orden territorial vinculados antes del 30 de diciembre de 1996, como lo es 
+        para el caso presente.
+    </p>
     <br>
-    <p class="text">Cordialmente,</p>
+    <p class="text">
+        Que de conformidad con lo establecido en el artículo 4° de la Ley 1071 de 2006 "Dentro de los quince (15) días hábiles siguientes a la presentación de 
+        la solicitud de liquidación de las cesantías definitivas o parciales, por parte de los peticionarios, la entidad empleadora o aquella que tenga a su cargo 
+        el reconocimiento y pago de las cesantías, deberá expedir la resolución correspondiente, si reúne todos los requisitos determinados en la ley".   
+    </p>
+    <br>
+    <p class="text">
+        Que de acuerdo con lo establecido en el artículo 5° de la Ley 1071 de 2006 "La entidad pública pagadora tendrá un plazo máximo de cuarenta y cinco (45) 
+        días hábiles, a partir de la cual quede en firme el acto administrativo que ordena la liquidación de las cesantías definitivas o parciales del servidor 
+        público, para cancelar esta prestación social, sin perjuicio de lo establecido para el Fondo Nacional de Ahorro".  
+    </p>
+    <br>
+    <p class="text">
+        Que con fundamento en lo previsto en los artículos 17 de la Ley 6ª de 1945 y 1° del Decreto 2567 de 1946 "El auxilio de cesantía a que tengan derecho los 
+        empleados y obreros al servicio de la Nación, los departamentos y los municipios, se liquidará de conformidad con el último sueldo o jornal devengado, a 
+        menos que el sueldo o jornal haya tenido modificaciones en los últimos tres meses, en cuyo caso la liquidación se hará por el promedio devengado los 
+        últimos doce meses, en todo el tiempo de servicio, si este fue menor de doce meses".  
+    </p>
+    <br>
+    <p class="text">
+        Que de acuerdo con el artículo 144 numeral 14 del Decreto Ordenanzal 510 del 26 de diciembre de 2022, "Por el cual se establece la estructura de la 
+        administración pública departamental, se define la organización interna y las funciones de las dependencias del sector central de la administración pública 
+        de  Cundinamarca y se  dictan  otras disposiciones", entre  otras, las  funciones de la  Dirección de A dministración del Talento Humano de la Secretaría 
+        de la Función Pública, está la de "Liquidar y reconocer las cesantías de los servidores públicos del Sector Central del Departamento y de las entidades 
+        sustituidas por el fondo de cesantías, expidiendo las certificaciones correspondientes".  
+    </p>
 
-    <div class="signatures">
-        <p><strong>JACQUELINE BERMUDEZ FORERO</strong><br>Directora de Administración del Talento Humano</p>
-    </div>
-    <div class="approved">    
+    <p class="text">
+        {% if request.withdrawal_mode  == 'E'  %}   
+            Que para el retiro parcial de cesantía para estudio la Ley 1071 de 2006, no especifica si la educación es de carácter formal, no formal, bachillerato o primaria, 
+            por lo que se considera procedente el retiro no solo para educación formal y no formal, sino para educación media vocacional bachillerato y primaria.
+            <br>
+            Que en igual sentido la Ley 1064 de 2006, amplia la posibilidad de hacer retiros de cesantías para el pago de matrículas en instituciones y programas técnicos conducentes a certificados de aptitud ocupacional, que impartan educación para el trabajo y el desarrollo humano del servidor público, su cónyuge, compañero (a) permanente, e hijos del funcionario. 
+            <br>
+        {% endif %}   
+    </p>
+    <br>
+    <p class="text">
+        {% if request.withdrawal_mode  == 'E'  %}   
+            Que para el retiro parcial de la cesantía para estudio el funcionario cumple con los requisitos contemplados en la Ley 1071 de 2006 y los documentos requeridos 
+            en la solicitud del Formato A-GTH-FR-159, Versión 03, Aprobación del 04/10/2024.
+        {% elif request.withdrawal_mode  == 'R'  %} 
+            Que para el retiro parcial de cesantía para reparaciones locativas, la funcionaria cumple con los requisitos contemplados el Decreto 2755 de 1966, Ley 1071 de 
+            2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-159, Versión 03, Aprobación del 04/10/2024. 
+        {% elif request.withdrawal_mode  == 'H'  %} 
+            Que para el retiro parcial de cesantía para abono o pago de crédito hipoteca, el funcionario cumple con los requisitos contemplados el Decreto 2755 de 1966, ley 1071
+            de 2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-139, Versión 04, Aprobación 04/10/2024.
+        {% elif request.withdrawal_mode  == 'V'  %} 
+            Que para la liquidación y reconocimiento de la cesantía parcial retroactiva para adquisición de bien inmueble, el funcionario cumple con los requisitos contemplados 
+            el Decreto 2755 de 1966, reglamentado por el Decreto 888 de 1991, Ley 1071 de 2006, y los documentos requeridos en la solicitud del Formato A-GTH-FR-159, Versión 03, Aprobación del 04/10/2024.
+        {% endif %}
+    </p>
+    <br>   
+    <p class="text">
+        Que para el reconocimiento de la 
+            {% if request.withdrawal_mode  == 'D' %}
+                cesantía definitiva retroactiva, 
+            {% elif request.withdrawal_mode  == 'E'  %}   
+                cesantía parcial retroactiva para estudio, 
+            {% elif request.withdrawal_mode  == 'R'  %} 
+                cesantía parcial retroactiva para reparaciones locativas, 
+            {% elif request.withdrawal_mode  == 'H'  %} 
+                cesantía parcial retroactiva para abono a crédito hipotecario, 
+            {% elif request.withdrawal_mode  == 'V'  %} 
+                cesantía parcial retroactiva para adquisición de bien inmueble, 
+            {% endif %}
+        se tendrá en cuenta todo el tiempo de servicio comprendido, entre el {{ request.official_ID.start_date }} al {{ request.request_date }}, 
+        para un total de días acumulados de {{ request.working_days }}  
+            {% if request.no_work_days  == 0 %}
+                sin
+            {% else %}
+                con
+            {% endif %}
+        interrupción en el servicio. 
+    </p>
+    <br> 
+    <p class="text">
+        Que para la liquidación de la cesantía retroactiva se tomará no solo el salario fijo, sino  todo lo que reciba el funcionario a cualquier otro título y que 
+        implique directa o indirectamente retribución ordinaria y permanente de servicios, tales como las primas, sobresueldos y bonificaciones; pero no la 
+        sumas que ocasionalmente se den por mera liberalidad del empleador.  Que en el caso que la funcionaria que haya recibido primas o bonificaciones que 
+        no tengan el carácter de mensuales, el promedio de la remuneración se obtendrá de dividir el monto de dichas primas, horas suplementarias o extras 
+        trabajadas y  recibidas en el último año de servicio, por doce y sumando el promedio a la última remuneración fija mensual, tal como lo consagra el 
+        Decreto 1160 de 1947.  Que en la fórmula para la liquidación de cesantías se tendrá en cuenta:   
+    </p>
+    <br>
+    <p class="title" style="text-decoration: underline;">(Salario Promedio) X (Días Trabajados)
+    <br>
+    <p class="title">360 días</p>
+    <br>
+    <p class="text">Que el salario promedio a la fecha de la solicitud es de $ {{ request.average_salary}} </p>
+    <br>
+    <p class="text">Que la totalidad de las cesantías suma ${{ request.total_severance_value}} </p>
+    <br>
+    <p class="text">Que previamente se le han reconocido por concepto de cesantías parciales la suma de ${{ request.previous_severance_value}} </p>
+    <br>
+    <p class="text">Que el saldo de la cesantía
+        {% if request.withdrawal_mode  == 'D' %}
+            definitiva es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
+            de acuerdo con el saldo de cesantías y no el valor de la Promesa de Compraventa suscrita.
+        {% elif request.withdrawal_mode  == 'E'  %}   
+            parcial es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
+            de acuerdo con el valor contemplado en la Orden de Matrícula de la Institución Universitaria {{ request_detail.est_institution }} , con NIT. {{ request_detail.est_nit }}.     
+        {% elif request.withdrawal_mode  == 'R'  %} 
+            parcial es de ${{ request.balance_severance}}, de acuerdo con el valor
+
+            {% if request.filling_value == request.severance_disbursed_value %}
+                 del contrato de obra adjunto a la presente solicitud. 
+            {% else %}
+                el saldo de cesantías
+            {% endif %}
+
+        {% elif request.withdrawal_mode  == 'H'  %} 
+            parcial es de ${{ request.balance_severance}}, de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} ,
+            las cuales serán abonadas al Crédito Hipotecario No. {{ request_detail.hip_loan_number }} , de acuerdo con lo Certificado por {{ request_detail.hip_bank }} con NIT. {{ request_detail.hip_nit }}
+        {% elif request.withdrawal_mode  == 'V'  %} 
+            parcial es de ${{ request.balance_severance}} , de lo cual se le reconocerá la suma de ${{ request.severance_disbursed_value}} , de acuerdo con el valor de la Promesa de Compraventa suscrita.
+        {% endif %}
+            
+    </p>
+    <br>
+    <p class="text">Que el presente acto administrativo se sustenta en la liquidación efectuada por el Grupo de Cesantías de la Dirección de Administración 
+        del Talento Humano de la Secretaría de la Función  Pública, con base en la Certificación 
+
+            {% if certification.cert_number %}
+                No {{ certification.cert_number }}
+            {% endif %}
+            
+        de Tiempo de Servicio, Sueldos y Salarios  del {{ certification.cert_date}} , 
+        expedida por {{ certification.cert_position}} (E)  de {{ certification.cert_entity_name}} 
+    </p>
+    <br>
+    <p class="text">Que existe Disponibilidad Presupuestal expedida por la Directora de presupuesto de la Secretaría de Hacienda, según Certificado No.	{{ request.cdp_number }} del {{ request.cdp_issue_date }}</p>
+    <br>
+    <div class="new-page">
+        <br>
+        <p class="text">En mérito de lo expuesto, </p>
+        <br>
+        <p class="title">RESUELVE </p>
+        <br>
+        <p class="text"><strong> ARTÍCULO PRIMERO:</strong> Liquidar y reconocer 
+
+                {% if request.withdrawal_mode  == 'D' %}
+                    cesantía definitiva retroactiva, 
+                {% elif request.withdrawal_mode  == 'E'  %}   
+                    cesantía parcial retroactiva para estudio, 
+                {% elif request.withdrawal_mode  == 'R'  %} 
+                    cesantía parcial retroactiva para reparaciones locativas, 
+                {% elif request.withdrawal_mode  == 'H'  %} 
+                    cesantía parcial retroactiva para abono a crédito hipotecario, 
+                {% elif request.withdrawal_mode  == 'V'  %} 
+                    cesantía parcial retroactiva para adquisición de bien inmueble, 
+                {% endif %}
+
+                {% if request.official_ID.gender  == 'M' %}
+                    a el señor 
+                {% else %}   
+                    a la señora 
+                {% endif %}
+
+            {{ request.official_ID.names }} {{ request.official_ID.last_names }} 
+            
+            con cédula de ciudadanía {{ request.official_ID.number_ID }} , por la suma de {{ valor_en_letras}}  PESOS M/CTE ($ {{ request.severance_disbursed_value}} ), 
+            
+                {% if request.withdrawal_mode  == 'H'  %} 
+                    como abono al Crédito Hipotecario No. {{ request_detail.hip_loan_number }}, contraído con {{ request_detail.hip_bank }}.,
+                {% endif %}
+
+            por el tiempo de servicio comprendido entre {{ request.official_ID.start_date}} al {{ request.request_date}} , para un total de días acumulados de {{ request.working_days}} 
+                
+                {% if request.no_work_days  == 0 %}
+                    sin
+                {% else %}
+                    con
+                {% endif %}
+
+            interrupción en el servicio 
+        </p>
+        
+        <br>
+        {% if request.withdrawal_mode  == 'V'  %} 
+            PARÁGRAFO: Una vez registrada la escritura de compraventa, deberá allegar copia del Certificado de Libertad -
+            Folio de Matrícula Inmobiliaria, a la Dirección de Administración del Talento Humano de la Secretaría de la Función
+            Pública del departamento de Cundinamarca, en un término no mayor a 90 días contados a partir de la fecha de
+            expedición de la presente resolución.
+            <br>
+        {% endif %}
+
+        <p class="text"><strong>ARTÍCULO SEGUNDO:</strong> Solicitar a la Tesorera de la Secretaría de Hacienda del departamento de Cundinamarca, girar la suma de {{ valor_en_letras}} PESOS M/CTE ($ {{ request.severance_disbursed_value}}), 
+            {% if request.withdrawal_mode == 'D' or request.withdrawal_mode == 'R' or request.withdrawal_mode == 'V' %}
+                {% if request.official_ID.gender  == 'M' %}
+                  al señora 
+                {% else %}   
+                  a la señora 
+                {% endif %}
+                {{ request.official_ID.names }} {{ request.official_ID.last_names }} con cédula de ciudadanía {{ request.official_ID.number_ID }} 
+            {% elif request.withdrawal_mode  == 'E'  %}   
+                a la Institución Universitaria {{ request_detail.est_institution }} , con NIT. {{ request_detail.est_nit }}.
+            {% elif request.withdrawal_mode  == 'H'  %} 
+                a {{ request_detail.hip_bank }} con NIT. {{ request_detail.hip_nit }}.
+            {% endif %}
+            
+        </p>
+        <br>
+        <p class="text"><strong>ARTÍCULO TERCERO:</strong> El gasto que ocasione el cumplimiento de la presente resolución se pagará con cargo al Rubro {{ request.official_ID.entity_ID.heading }}.
+        </p>
+        <br>
+        <p class="text"><strong>ARTÍCULO CUARTO:</strong> La liquidación de cesantías anexa al presente acto administrativo, es parte integral del mismo. </p>
+        <br>
+        <p class="text"><strong>ARTÍCULO QUINTO:</strong> Notificar a la señora {{ request.official_ID.names }} {{ request.official_ID.last_names }} , haciéndole saber que contra el presente acto 
+            administrativo procede el recurso de reposición ante la dirección de Talento Humano de la Secretaría de la Función Pública. Podrá hacer uso de este recurso 
+            dentro de los diez (10) días siguientes a la notificación, manifestando por escrito las razones de inconformidad, de acuerdo con el artículo 76 del Código de 
+            Procedimiento Administrativo y de lo Contencioso Administrativo. 
+        </p>
+        <br>
+        <p class="text"><strong>ARTÍCULO SEXTO:</strong> La presente resolución rige a partir de su expedición y produce efectos a partir de su notificación. </p>
+        <br>
+        <p class="title">NOTIFÍQUESE Y CÚMPLASE</p>
+        <p class="title">Dado en Bogotá D.C., a los  </p>
+        <br>
+        <br>
+        <div class="signatures">
+            <p><strong>LUZ MARINA SÁNCHEZ BOHÓRQUEZ</strong><br>Directora de Administración del Talento Humano</p>
+        </div>   
+        <div class="approved">    
+        <p><strong>Proyectó:</strong> María P. González G., Profesional Universitario, Grupo Cesantías, Dirección de Administración del Talento Humano, S.F.P.</p>
         <p><strong>Revisó:</strong> Néstor A. Rodríguez R., Coordinador Grupo Cesantías, Dirección de Administración del Talento Humano, S.F.P.</p>    
-        <p><strong>Elaboró:</strong> María P. González G., Profesional Universitario, Grupo Cesantías, Dirección de Administración del Talento Humano, S.F.P.</p>
+    </div>
+
+    <div class="new-page">
+        <!-- Esta es la primera página con contenido sin encabezado -->
+        <div>
+            <h4>SECRETARÍA DE LA FUNCIÓN PÚBLICA</h4> 
+            <h4>DIRECCIÓN DE ADMINISTRACIÓN DE TALENTO HUMANO</h4>
+            <br>
+            <h4>DILIGENCIA DE NOTIFICACIÓN PERSONAL</h4>
+            <br>
+            <p>Hoy ____________________________________________  Hora: _____________________________</p>
+            <p>Se presentó: ____________________________________________________________________________</p>
+            <p>Identificado (a) con la C. C ________________________ de: _________________________________</p>
+            <p>Con el fin de notificarse personalmente de la Resolución  No. ____________  de fecha __________________________, manifestando que:___________________________________________</p>
+            <br>
+            <p>Se hace entrega al notificado (a) de copia íntegra, auténtica y gratuita del acto administrativo señalado</p>
+            <br>
+            <p>Firma____________________________________</p>
+            <p>C. C. ____________________________________</p>
+        </div>
+        <br>
+        <div>
+            <h2>Datos Personales</h2>
+            <p>Dirección residencia del notificado: __________________________________________________</p>
+            <p>Ciudad o municipio: _________________________________________________________________</p>
+            <p>Número telefónico:   _________________________________________________________________</p>
+        </div>
     </div>
 </div>
 </body>

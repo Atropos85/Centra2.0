@@ -19,12 +19,12 @@ var request_id = pdfReports.request_id
     }
     if (pdfReports.check_rep_rso) {
         var baseUrl = window.location.origin;
-        var reportUrl =baseUrl + "/cesantias/reporte/?report_name=Solicitud_RPC&object_id= " + request_id;
+        var reportUrl =baseUrl + "/cesantias/reporte/?report_name=Emision_Resolucion&object_id= " + request_id;
         window.open(reportUrl);  // Redirige a la URL directamente
     }
     if (pdfReports.check_rep_rpc) {
         var baseUrl = window.location.origin;
-        var reportUrl =baseUrl + "/cesantias/reporte/?report_name=Emision_Resolucion&object_id= " + request_id;
+        var reportUrl =baseUrl + "/cesantias/reporte/?report_name=Solicitud_RPC&object_id= " + request_id;
         window.open(reportUrl);  // Redirige a la URL directamente
     }
 

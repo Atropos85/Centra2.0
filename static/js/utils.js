@@ -153,6 +153,7 @@ $(document).ready(function() {
 
     // Escucha cambios en todos los campos de tipo datepicker para re-inicializar si es necesario
     $('.datepicker').on('change', function() {
+        $(this).datepicker('destroy');
         initializeDatepicker(); // Re-inicializa el datepicker para reflejar el estado actual
     });
 });

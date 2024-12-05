@@ -3,8 +3,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const requestStateValue = document.getElementById('requestStateValue').value;
     const withdrawalModeSelect = document.getElementById('id_withdrawal_mode');
 
-    // Verificar si el valor no está en ['1', '2','' '10']
-    // Estados RADICADA  Y LIQUIDADA PERMITEN ACTUALIZAR LA INFORMACION DE LA SOLICITUD
+
+    // Estados RADICADA  Y LIQUIDADA Y CDP SOLICITADO PERMITEN ACTUALIZAR LA INFORMACION DE LA SOLICITUD
     if (!requestStateValue || !['1','2','3'].includes(requestStateValue)) {
         // Obtener los elementos del formulario
         const filling_numInput = document.getElementById('id_filling_number');
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     }
-    // Estados RADICADA  Y LIQUIDADA PERMITEN ACTUALIZAR LA INFORMACION DE LA SOLICITUD
+    // Estados CDP SOLICITADO  Y SOLICITUD RESOLUCION PERMITE ACTUALIZAR LA INFORMACION DEL CDP  
     if (!requestStateValue || !['1','2','3','4'].includes(requestStateValue)) {
         const cdp_dateInput = document.getElementById('id_cdp_issue_date');
         const cdp_numInput = document.getElementById('id_cdp_number');
@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
             hip_bankInput.setAttribute('readonly', true)
         }
     }
-
-    if (!requestStateValue || !['1','2','3','4','5'].includes(requestStateValue)) {
+    // Estados NOTIFICADO BLOQUEA LA MODIFICACION DE LA INFORMACION DE LA SOLICITUD EN GENERAL ANTES PERMITIA MODIFICAR LOS VALORES DEL CALCULO
+    if (!requestStateValue || !['1','2','3','4','5','6'].includes(requestStateValue)) {
         // Obtener los elementos del formulario
         const noti_dateInput = document.getElementById('id_notify_date');
 
@@ -106,6 +106,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const dev_by_drawInput = document.getElementById('id_dev_by_draw');
         const travel_expensesnput = document.getElementById('id_travel_expenses');
  
+        const reso_dateInput = document.getElementById('id_resolution_date');
+        const reso_numInput = document.getElementById('id_resolution_number');
+
+        reso_dateInput.setAttribute('readonly', true)
+        reso_numInput.setAttribute('readonly', true)
+
         noti_dateInput.setAttribute('readonly', true)
 
         nowork_daysInput.setAttribute('readonly', true)
@@ -126,16 +132,7 @@ document.addEventListener('DOMContentLoaded', function() {
         travel_expensesnput.setAttribute('readonly', true)
     }
 
-    if (!requestStateValue || !['1','2','3','4','5'].includes(requestStateValue)) {
-        // Obtener los elementos del formulario
-        const reso_dateInput = document.getElementById('id_resolution_date');
-        const reso_numInput = document.getElementById('id_resolution_number');
-
-        reso_dateInput.setAttribute('readonly', true)
-        reso_numInput.setAttribute('readonly', true)
-    }
-
-    if (!requestStateValue || !['1','2','3','4','5','6'].includes(requestStateValue)) {
+    if (!requestStateValue || !['1','2','3','4','5','6','7','8','9'].includes(requestStateValue)) {
         // Obtener los elementos del formulario
         const rpc_dateInput = document.getElementById('id_rpc_request_date');
         const rpc_numInput = document.getElementById('id_rpc_number');
@@ -144,8 +141,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rpc_numInput.setAttribute('readonly', true)
     }
 
-    if (['10'].includes(requestStateValue)) {
-        console.log("entra4")
+    if (['11'].includes(requestStateValue)) {
         // Obtener los elementos del formulario
         const treasury_dateInput = document.getElementById('id_treasury_date');
         const billing_dateInput = document.getElementById('id_billing_date');
