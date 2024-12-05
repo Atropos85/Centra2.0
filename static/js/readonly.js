@@ -126,7 +126,7 @@ document.addEventListener('DOMContentLoaded', function() {
         travel_expensesnput.setAttribute('readonly', true)
     }
 
-    if (!requestStateValue || !['1','2','3','4','5'].includes(requestStateValue)) {
+    if (!requestStateValue || !['1','2','3','4','5','6'].includes(requestStateValue)) {
         // Obtener los elementos del formulario
         const reso_dateInput = document.getElementById('id_resolution_date');
         const reso_numInput = document.getElementById('id_resolution_number');
@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', function() {
         reso_numInput.setAttribute('readonly', true)
     }
 
-    if (!requestStateValue || !['1','2','3','4','5','6'].includes(requestStateValue)) {
+    if (!requestStateValue || !['1','2','3','4','5','6','7'].includes(requestStateValue)) {
         // Obtener los elementos del formulario
         const rpc_dateInput = document.getElementById('id_rpc_request_date');
         const rpc_numInput = document.getElementById('id_rpc_number');
@@ -145,7 +145,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if (['10'].includes(requestStateValue)) {
-        console.log("entra4")
         // Obtener los elementos del formulario
         const treasury_dateInput = document.getElementById('id_treasury_date');
         const billing_dateInput = document.getElementById('id_billing_date');

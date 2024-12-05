@@ -199,16 +199,16 @@ def get_visible_fields(request_state, withdrawal_mode, is_new_request=False):
             elif withdrawal_mode == 'R':
                 visibility['show_build_fields'] = True
 
-        if request_state not in [1, 2, 3, 10]:
-            visibility['show_noti_fields'] = True
-
-        if request_state not in [1, 2, 3, 4, 10]:
+        if request_state not in [1, 2, 3, 11]:
             visibility['show_fact_fields'] = True
 
-        if request_state not in [1, 2, 3, 4, 5, 10]:
+        if request_state not in [1, 2, 3, 4, 11]:
+            visibility['show_noti_fields'] = True
+
+        if request_state not in [1, 2, 3, 4, 5, 6, 11]:
             visibility['show_rpc_fields'] = True
 
-        if request_state not in [1, 2, 3, 4, 5, 6, 7, 10]:
+        if request_state not in [1, 2, 3, 4, 5, 6, 7, 8, 11]:
             visibility['show_pago_fields'] = True
     return visibility
   
@@ -291,35 +291,42 @@ class RequestReport:
                     reports['check_rep_rso'] = False
                 
             if check_rep_rpc:
-                if req.notify_date and req.resolution_date and req.resolution_number:
+                if req.notify_date:
                     reports['check_rep_rpc'] = True
-                    if req.request_state == 4 or req.request_state == 5:
-                        req.request_state = 6  # Cambiar el estado a RPC SOLICITADO
+                    if req.request_state == 6:
+                        req.request_state = 7  # Cambiar el estado a RPC SOLICITADO
                         req.rpc_request_date = timezone.now()
                         req.save()                        
                 else :
                     messages.error(request, 'No es posible crear el reporte.Por favor diligencie los campos asociados a la resolucion.')
                     reports['check_rep_rpc'] = False                
+        
+        #Se actualiza el estado validando campos
+        if req.resolution_date and req.resolution_number:
+            if req.request_state == 4:
+                req.request_state = 5  # Cambiar el estado a EMISION RESOLUCION
+                req.save() 
 
         #Se actualiza el estado validando campos
         if req.notify_date:
-            if req.request_state == 4:
-                req.request_state = 5  # Cambiar el estado a NOTIFICADO
+            if req.request_state == 5:
+                req.request_state = 6  # Cambiar el estado a NOTIFICADO
                 req.save() 
 
         if req.rpc_request_date and req.rpc_number:
-            if req.request_state == 6:
-                req.request_state = 7  # Cambiar el estado a RPC EMITIDO
+            if req.request_state == 7:
+                req.request_state = 8  # Cambiar el estado a RPC EMITIDO
                 req.save() 
 
+
         if req.rpc_request_date and req.rpc_number:
-            if req.request_state == 6 or req.request_state == 7:
-                req.request_state = 8  # Cambiar el estado a PASO A FACTURACION
+            if req.request_state == 8:
+                req.request_state = 9  # Cambiar el estado a PASO A FACTURACION
                 req.save()   
 
         if req.billing_date and req.treasury_date and req.billing_number:
-            if req.request_state == 8:
-                req.request_state = 9  # Cambiar el estado a PROCESO DE PAGO
+            if req.request_state == 9:
+                req.request_state = 10  # Cambiar el estado a PROCESO DE PAGO
                 req.save()   
         
         py_dict = json.dumps(reports)
