@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const ipartes = startDateInput.value.split("/");
 
         const idia = (31-ipartes[0]); 
-        const imes = ((13-ipartes[1])*30);  
+        const imes = ((12-ipartes[1])*30);  
         const iaño = (1+parseInt(ipartes[2])); 
 
         // Extraer y transformar las fechas en días
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const fmes = ((fpartes[1]-1)*30);  
-        const faño = (parseInt(fpartes[2])-1);  
+        const faño = (parseInt(fpartes[2]));  
 
         const dia1 = (parseInt(idia) + parseInt(imes) + parseInt(fdia))
 
