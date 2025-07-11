@@ -109,7 +109,7 @@ load_dotenv()
 
 # variable db --https://stackpython.medium.com/how-to-start-django-project-with-a-database-postgresql-aaa1d74659d8
 
- DATABASES = {
+DATABASES = {
     'default': {
        
         'ENGINE': 'django.db.backends.postgresql',

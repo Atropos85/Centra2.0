@@ -1,0 +1,6 @@
+
+# pyproject.toml
+[project]
+name = "centra"
+version = "0.1.0"
+dependencies = ["mcp[cli]", "django", "python-dotenv"]

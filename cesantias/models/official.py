@@ -64,7 +64,7 @@ class Official(models.Model):
     start_date = models.DateField()
 
     def __str__(self):
-        return f'{self.names} {self.last_names}'
+        return f' {self.number_ID} {self.names} {self.last_names}'
 
 # Modelo NoWorkDays
 class NoWorkDays(models.Model):

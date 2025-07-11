@@ -15,4 +15,9 @@ Manual de despligue entorno de desarrollo.
    Comando: python manage.py migrate
    Comando: python manage.py createsuperuser
    Comando: python manage.py runserver
+
+para  clonar el repositorio de MPC 
+git clone https://github.com/modelcontextprotocol/modelcontextprotocol.git
+cd modelcontextprotocol
+pip install -e .
   

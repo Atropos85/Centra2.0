@@ -36,6 +36,7 @@
         <script src="{% static 'js/reports.js' %}"></script> 
         <script src="{% static 'js/eventKey.js' %}"></script> 
         <script src="{% static 'js/readonly.js' %}"></script> 
+        <script src="{% static 'js/chat.js' %}"></script>
         <link rel="stylesheet" href="{% static 'css/cesantias.css' %}"> 
     {% endblock %}    
 
@@ -66,6 +67,17 @@
 
     <div class="content-custom">
         {% block content %}
+        <div class="container mt-5">
+            <h3 class="mb-4">Asistente Virtual de Cesantías</h3>
+            <div id="chat-box" class="border rounded p-3" style="height: 300px; overflow-y: auto; background-color: #f8f9fa;"></div>
+
+            <div class="input-group mt-3">
+                <input type="text" id="user-input" class="form-control" placeholder="Escribe tu mensaje...">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" id="send-btn">Enviar</button>
+                </div>
+            </div>
+        </div>
         {% endblock %}
     </div>
 </body>
